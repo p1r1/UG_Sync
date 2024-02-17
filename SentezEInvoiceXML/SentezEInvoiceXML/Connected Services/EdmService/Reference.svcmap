@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ebac71c9-8924-40bf-bd21-313ca58368ac" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://portal2.edmbilisim.com.tr/EFaturaEDM/EFaturaEDM.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="EFaturaEDM.xsd" MetadataType="Schema" ID="71f823d3-eeea-481d-89e6-36b272746144" SourceId="1" SourceUrl="https://portal2.edmbilisim.com.tr/EFaturaEDM/EFaturaEDM.svc?xsd=xsd0" />
+    <MetadataFile FileName="EFaturaEDM1.xsd" MetadataType="Schema" ID="0e9b8ab2-8249-4946-b5b3-17b9d27e695f" SourceId="1" SourceUrl="https://portal2.edmbilisim.com.tr/EFaturaEDM/EFaturaEDM.svc?xsd=xsd5" />
+    <MetadataFile FileName="EFaturaEDM2.xsd" MetadataType="Schema" ID="7809c2c9-4004-41c7-9587-85a5771e4c63" SourceId="1" SourceUrl="https://portal2.edmbilisim.com.tr/EFaturaEDM/EFaturaEDM.svc?xsd=xsd2" />
+    <MetadataFile FileName="EFaturaEDM.wsdl" MetadataType="Wsdl" ID="1846f60d-70b6-4df4-b25a-8a7e756e80f1" SourceId="1" SourceUrl="https://portal2.edmbilisim.com.tr/EFaturaEDM/EFaturaEDM.svc?wsdl" />
+    <MetadataFile FileName="EFaturaEDM3.xsd" MetadataType="Schema" ID="a20bf902-6277-4e4a-bb7f-6559cab639e8" SourceId="1" SourceUrl="https://portal2.edmbilisim.com.tr/EFaturaEDM/EFaturaEDM.svc?xsd=xsd1" />
+    <MetadataFile FileName="EFaturaEDM4.xsd" MetadataType="Schema" ID="64853ace-7999-4fee-8ce8-4a850c22ef09" SourceId="1" SourceUrl="https://portal2.edmbilisim.com.tr/EFaturaEDM/EFaturaEDM.svc?xsd=xsd3" />
+    <MetadataFile FileName="EFaturaEDM5.xsd" MetadataType="Schema" ID="49b0d222-0bbf-49fa-bd04-dd0c060d250d" SourceId="1" SourceUrl="https://portal2.edmbilisim.com.tr/EFaturaEDM/EFaturaEDM.svc?xsd=xsd4" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

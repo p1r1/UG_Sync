@@ -1,0 +1,102 @@
+﻿using System;
+using System.ServiceModel;
+
+namespace UGSync002 {
+    class WebServiceApp {
+        private string m_sentezUserName = "web";
+        private string m_sentezUserPassword = "zaq!2wsx";
+        private string m_sentezCompanyCode = "01";
+        private string m_sentezCompanyPassword = "zaq!2wsx";
+
+        private string m_loginServiceUrl = @"http://192.168.1.99:55801/service/Login/LoginService.svc";
+        private string m_financeServiceUrl = @"http://192.168.1.99:55801/service/FinanceModule/FinanceModuleService.svc";
+        private string m_orderServiceUrl = @"http://192.168.1.99:55801/service/OrderModule/OrderModuleService.svc";
+
+        public string sentezUserNameGetSet { get { return m_sentezUserName; } set { m_sentezUserName = value; } }
+        public string sentezUserPasswordGetSet { get { return m_sentezUserPassword; } set { m_sentezUserPassword = value; } }
+        public string sentezCompanyCodeGetSet { get { return m_sentezCompanyCode; } set { m_sentezCompanyCode = value; } }
+        public string sentezCompanyPasswordGetSet { get { return m_sentezCompanyPassword; } set { m_sentezCompanyPassword = value; } }
+        public string loginServiceUrlGetSet { get { return m_loginServiceUrl; } set { m_loginServiceUrl = value; } }
+        public string financeServiceUrlGetSet { get { return m_financeServiceUrl; } set { m_financeServiceUrl = value; } }
+        public string orderServiceUrlGetSet { get { return m_orderServiceUrl; } set { m_orderServiceUrl = value; } }
+
+        public Guid Login() {
+            // dynamic webservice
+            BasicHttpBinding binding = new BasicHttpBinding();
+            EndpointAddress endpoint = new EndpointAddress(new Uri(m_loginServiceUrl));
+
+            Guid rtnKey = Guid.Empty;
+            using (var lgn = new Login.LoginServiceClient(binding, endpoint)) {
+                //Bağlan
+                lgn.Open();
+                //Login Ol
+                Login.ReturnLogin rtn = lgn.LogIn(new Login.Login() { CompanyCode = m_sentezCompanyCode, UserCode = m_sentezUserName, UserPassword = m_sentezUserPassword, CompanyPassword = m_sentezCompanyPassword });
+                if (rtn.ReturnCode < 400) {
+                    rtnKey = rtn.Session;
+                }
+
+            }
+            return rtnKey;
+        }
+        public Finance.ReturnCurrentAccountBO getOfmAccountEmail(Guid sessionKey, string value) {
+            // dynamic webservice
+            BasicHttpBinding binding = new BasicHttpBinding();
+            EndpointAddress endpoint = new EndpointAddress(new Uri(m_financeServiceUrl));
+
+            using (var client = new Finance.FinanceModuleServiceClient(binding, endpoint)) {
+                Finance.GetWhereObject wo = new Finance.GetWhereObject();
+                wo.Session = sessionKey;
+                wo.Where = new Finance.WhereClass[] {
+                    new Finance.WhereClass() { TableName="Erp_CurrentAccount", Concator="And", Condition="Equal", FieldName="EMail", Value=value  }
+                };
+
+                return client.GetAllWhereCurrentAccountBO(wo);
+            }
+        }
+        public void SaveCurrentAccount(Guid sessionKey, Finance.Erp_CurrentAccount ca, bool replaceAll) {
+            // dynamic webservice
+            BasicHttpBinding binding = new BasicHttpBinding();
+            EndpointAddress endpoint = new EndpointAddress(new Uri(m_financeServiceUrl));
+
+            using (var client = new Finance.FinanceModuleServiceClient(binding, endpoint)) {
+                Finance.PostCurrentAccountBO bo = new Finance.PostCurrentAccountBO();
+                bo.PostData = new Finance.Erp_CurrentAccount[] { ca };
+                bo.Session = sessionKey;
+                bo.ReplaceAll = replaceAll;
+                var get = client.PostAllCurrentAccountBO(bo);
+            }
+        }
+        public UGSync002.Order.ReturnOrderReceiptBO GetOFMOrderReceipt(Guid sessionKey, string specialCode, int ReceiptType) {
+            // dynamic webservice
+            BasicHttpBinding binding = new BasicHttpBinding();
+            EndpointAddress endpoint = new EndpointAddress(new Uri(m_orderServiceUrl));
+
+            using (var client = new Order.OrderModuleServiceClient(binding, endpoint)) {
+                Order.GetWhereObject wo = new Order.GetWhereObject();
+                wo.Session = sessionKey;
+                wo.Type = ReceiptType; // is this 111111111111 check this ofm
+                wo.Where = new Order.WhereClass[] {
+                    new Order.WhereClass() { TableName="Erp_OrderReceipt", Concator="And", Condition="Equal", FieldName="SpecialCode", Value=specialCode  },
+                                        new Order.WhereClass() { TableName="Erp_OrderReceipt", Concator="And", Condition="Equal", FieldName="ReceiptType", Value=2 }
+                };
+                //Console.WriteLine("getOFM");
+                return client.GetAllWhereOrderReceiptBO(wo);
+            }
+        }
+        internal Order.ReturnOrderReceiptBO SaveOrderReceipt(Guid sessionKey, Order.Erp_OrderReceipt or, bool replaceAll) {
+            // dynamic services
+            BasicHttpBinding binding = new BasicHttpBinding();
+            EndpointAddress endpoint = new EndpointAddress(new Uri(m_orderServiceUrl));
+
+            using (var client = new Order.OrderModuleServiceClient(binding, endpoint)) {
+                Order.PostOrderReceiptBO bo = new Order.PostOrderReceiptBO();
+                bo.PostData = new Order.Erp_OrderReceipt[] { or };
+                bo.Session = sessionKey;
+                bo.ReplaceAll = replaceAll;
+                var get = client.PostAllOrderReceiptBO(bo);
+                return get;
+            }
+        }
+
+    }//class
+}//namespace

@@ -1,0 +1,6 @@
+﻿
+namespace UGCore {
+    class Settings {
+
+    }
+}

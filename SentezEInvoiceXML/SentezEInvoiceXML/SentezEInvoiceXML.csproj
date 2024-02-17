@@ -1,0 +1,1413 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CD14E7EA-4BF2-4EBF-81AC-7CE27F11B83E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SentezEInvoiceXML</RootNamespace>
+    <AssemblyName>SentezEInvoiceXML</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.0.35\lib\net461\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.11.4.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.11.4\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlClient, Version=4.6.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SqlClient.4.8.1\lib\net461\System.Data.SqlClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\UGSync003\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\UGSync003\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UblLarsen.Ubl2, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b1e81a24f6c09f95, processorArchitecture=MSIL">
+      <HintPath>..\packages\UBLLarsen.1.0.0\lib\UblLarsen.Ubl2.dll</HintPath>
+    </Reference>
+    <Reference Include="UblLarsen.Ubl2.XmlSerializers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b1e81a24f6c09f95, processorArchitecture=MSIL">
+      <HintPath>..\packages\UBLLarsen.1.0.0\lib\UblLarsen.Ubl2.XmlSerializers.dll</HintPath>
+    </Reference>
+    <Reference Include="UblSharp, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UblSharp.1.1.1\lib\net45\UblSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="UblSharp.XmlSerializers, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UblSharp.1.1.1\lib\net45\UblSharp.XmlSerializers.dll</HintPath>
+    </Reference>
+    <Reference Include="XmlDiffPatch, Version=1.0.8.28, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\XMLDiffPatch.1.0.8.28\lib\net\XmlDiffPatch.dll</HintPath>
+    </Reference>
+    <Reference Include="XmlDiffPatch.View, Version=1.0.1493.40755, Culture=neutral">
+      <HintPath>..\packages\XMLDiffPatch.1.0.8.28\lib\net\XmlDiffPatch.View.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Connected Services\EdmService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="EInvoiceEmulator.cs" />
+    <Compile Include="tests\diffobj\xmlobj.cs" />
+    <Compile Include="DBModel\Erp_Adress.cs" />
+    <Compile Include="DBModel\Erp_City.cs" />
+    <Compile Include="DBModel\Erp_Company.cs" />
+    <Compile Include="DBModel\Erp_CurrentAccount.cs" />
+    <Compile Include="DBModel\Erp_District.cs" />
+    <Compile Include="DBModel\Erp_Inventory.cs" />
+    <Compile Include="DBModel\Erp_InventoryReceipt.cs" />
+    <Compile Include="DBModel\Erp_InventoryReceiptItem.cs" />
+    <Compile Include="DBModel\Erp_Invoice.cs" />
+    <Compile Include="DBModel\Erp_PaymentPlan.cs" />
+    <Compile Include="DBModel\Erp_TaxOffice.cs" />
+    <Compile Include="DBModel\Erp_UnitSetItem.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XMLModel\AcceptedIndicatorType.cs" />
+    <Compile Include="XMLModel\AcceptedVariantsDescriptionType.cs" />
+    <Compile Include="XMLModel\AccountFormatCodeType.cs" />
+    <Compile Include="XMLModel\AccountIDType.cs" />
+    <Compile Include="XMLModel\AccountingCostCodeType.cs" />
+    <Compile Include="XMLModel\AccountingCostType.cs" />
+    <Compile Include="XMLModel\AccountTypeCodeType.cs" />
+    <Compile Include="XMLModel\ActionCodeType.cs" />
+    <Compile Include="XMLModel\ActivityPropertyType.cs" />
+    <Compile Include="XMLModel\ActivityTypeCodeType.cs" />
+    <Compile Include="XMLModel\ActivityTypeType.cs" />
+    <Compile Include="XMLModel\ActualDeliveryDateType.cs" />
+    <Compile Include="XMLModel\ActualDeliveryTimeType.cs" />
+    <Compile Include="XMLModel\ActualDespatchDateType.cs" />
+    <Compile Include="XMLModel\ActualDespatchTimeType.cs" />
+    <Compile Include="XMLModel\ActualPickupDateType.cs" />
+    <Compile Include="XMLModel\ActualPickupTimeType.cs" />
+    <Compile Include="XMLModel\ActualTemperatureReductionQuantityType.cs" />
+    <Compile Include="XMLModel\AdditionalAccountIDType.cs" />
+    <Compile Include="XMLModel\AdditionalConditionsType.cs" />
+    <Compile Include="XMLModel\AdditionalInformationType.cs" />
+    <Compile Include="XMLModel\AdditionalStreetNameType.cs" />
+    <Compile Include="XMLModel\AddressFormatCodeType.cs" />
+    <Compile Include="XMLModel\AddressType.cs" />
+    <Compile Include="XMLModel\AddressTypeCodeType.cs" />
+    <Compile Include="XMLModel\AdjustmentReasonCodeType.cs" />
+    <Compile Include="XMLModel\AdmissionCodeType.cs" />
+    <Compile Include="XMLModel\AdValoremIndicatorType.cs" />
+    <Compile Include="XMLModel\AdvertisementAmountType.cs" />
+    <Compile Include="XMLModel\AgencyIDType.cs" />
+    <Compile Include="XMLModel\AgencyNameType.cs" />
+    <Compile Include="XMLModel\AircraftIDType.cs" />
+    <Compile Include="XMLModel\AirFlowPercentType.cs" />
+    <Compile Include="XMLModel\AirTransportType.cs" />
+    <Compile Include="XMLModel\AliasNameType.cs" />
+    <Compile Include="XMLModel\AllowanceChargeReasonCodeType.cs" />
+    <Compile Include="XMLModel\AllowanceChargeReasonType.cs" />
+    <Compile Include="XMLModel\AllowanceChargeType.cs" />
+    <Compile Include="XMLModel\AllowanceTotalAmountType.cs" />
+    <Compile Include="XMLModel\AltitudeMeasureType.cs" />
+    <Compile Include="XMLModel\AmountRateType.cs" />
+    <Compile Include="XMLModel\AmountType.cs" />
+    <Compile Include="XMLModel\AmountType1.cs" />
+    <Compile Include="XMLModel\AmountType2.cs" />
+    <Compile Include="XMLModel\AnimalFoodApprovedIndicatorType.cs" />
+    <Compile Include="XMLModel\AnimalFoodIndicatorType.cs" />
+    <Compile Include="XMLModel\AnnualAverageAmountType.cs" />
+    <Compile Include="XMLModel\AppealTermsType.cs" />
+    <Compile Include="XMLModel\ApplicationStatusCodeType.cs" />
+    <Compile Include="XMLModel\ApprovalDateType.cs" />
+    <Compile Include="XMLModel\ApprovalStatusType.cs" />
+    <Compile Include="XMLModel\AttachmentType.cs" />
+    <Compile Include="XMLModel\AttributeIDType.cs" />
+    <Compile Include="XMLModel\AuctionConstraintIndicatorType.cs" />
+    <Compile Include="XMLModel\AuctionTermsType.cs" />
+    <Compile Include="XMLModel\AuctionURIType.cs" />
+    <Compile Include="XMLModel\AvailabilityDateType.cs" />
+    <Compile Include="XMLModel\AvailabilityStatusCodeType.cs" />
+    <Compile Include="XMLModel\AverageAmountType.cs" />
+    <Compile Include="XMLModel\AverageSubsequentContractAmountType.cs" />
+    <Compile Include="XMLModel\AwardDateType.cs" />
+    <Compile Include="XMLModel\AwardingCriterionDescriptionType.cs" />
+    <Compile Include="XMLModel\AwardingCriterionIDType.cs" />
+    <Compile Include="XMLModel\AwardingCriterionResponseType.cs" />
+    <Compile Include="XMLModel\AwardingCriterionType.cs" />
+    <Compile Include="XMLModel\AwardingCriterionTypeCodeType.cs" />
+    <Compile Include="XMLModel\AwardingMethodTypeCodeType.cs" />
+    <Compile Include="XMLModel\AwardingTermsType.cs" />
+    <Compile Include="XMLModel\AwardTimeType.cs" />
+    <Compile Include="XMLModel\BackOrderAllowedIndicatorType.cs" />
+    <Compile Include="XMLModel\BackorderQuantityType.cs" />
+    <Compile Include="XMLModel\BackorderReasonType.cs" />
+    <Compile Include="XMLModel\BalanceAmountType.cs" />
+    <Compile Include="XMLModel\BalanceBroughtForwardIndicatorType.cs" />
+    <Compile Include="XMLModel\BarcodeSymbologyIDType.cs" />
+    <Compile Include="XMLModel\BaseAmountType.cs" />
+    <Compile Include="XMLModel\BasedOnConsensusIndicatorType.cs" />
+    <Compile Include="XMLModel\BaseQuantityType.cs" />
+    <Compile Include="XMLModel\BaseUnitMeasureType.cs" />
+    <Compile Include="XMLModel\BasicConsumedQuantityType.cs" />
+    <Compile Include="XMLModel\BatchQuantityType.cs" />
+    <Compile Include="XMLModel\BestBeforeDateType.cs" />
+    <Compile Include="XMLModel\BillingReferenceLineType.cs" />
+    <Compile Include="XMLModel\BillingReferenceType.cs" />
+    <Compile Include="XMLModel\BinaryObjectType.cs" />
+    <Compile Include="XMLModel\BinaryObjectType1.cs" />
+    <Compile Include="XMLModel\BindingOnBuyerIndicatorType.cs" />
+    <Compile Include="XMLModel\BirthDateType.cs" />
+    <Compile Include="XMLModel\BirthplaceNameType.cs" />
+    <Compile Include="XMLModel\BlockNameType.cs" />
+    <Compile Include="XMLModel\BranchType.cs" />
+    <Compile Include="XMLModel\BrandNameType.cs" />
+    <Compile Include="XMLModel\BrokerAssignedIDType.cs" />
+    <Compile Include="XMLModel\BudgetAccountLineType.cs" />
+    <Compile Include="XMLModel\BudgetAccountType.cs" />
+    <Compile Include="XMLModel\BudgetYearNumericType.cs" />
+    <Compile Include="XMLModel\BuildingNameType.cs" />
+    <Compile Include="XMLModel\BuildingNumberType.cs" />
+    <Compile Include="XMLModel\BulkCargoIndicatorType.cs" />
+    <Compile Include="XMLModel\BusinessClassificationEvidenceIDType.cs" />
+    <Compile Include="XMLModel\BusinessIdentityEvidenceIDType.cs" />
+    <Compile Include="XMLModel\BuyerEventIDType.cs" />
+    <Compile Include="XMLModel\BuyerProfileURIType.cs" />
+    <Compile Include="XMLModel\BuyerReferenceType.cs" />
+    <Compile Include="XMLModel\CalculationExpressionCodeType.cs" />
+    <Compile Include="XMLModel\CalculationExpressionType.cs" />
+    <Compile Include="XMLModel\CalculationMethodCodeType.cs" />
+    <Compile Include="XMLModel\CalculationRateType.cs" />
+    <Compile Include="XMLModel\CalculationSequenceNumericType.cs" />
+    <Compile Include="XMLModel\CallBaseAmountType.cs" />
+    <Compile Include="XMLModel\CallDateType.cs" />
+    <Compile Include="XMLModel\CallExtensionAmountType.cs" />
+    <Compile Include="XMLModel\CallTimeType.cs" />
+    <Compile Include="XMLModel\CancellationNoteType.cs" />
+    <Compile Include="XMLModel\CandidateReductionConstraintIndicatorType.cs" />
+    <Compile Include="XMLModel\CandidateStatementType.cs" />
+    <Compile Include="XMLModel\CanonicalizationMethodType.cs" />
+    <Compile Include="XMLModel\CapabilityType.cs" />
+    <Compile Include="XMLModel\CapabilityTypeCodeType.cs" />
+    <Compile Include="XMLModel\CardChipCodeType.cs" />
+    <Compile Include="XMLModel\CardTypeCodeType.cs" />
+    <Compile Include="XMLModel\CargoTypeCodeType.cs" />
+    <Compile Include="XMLModel\CarrierAssignedIDType.cs" />
+    <Compile Include="XMLModel\CarrierServiceInstructionsType.cs" />
+    <Compile Include="XMLModel\CatalogueIndicatorType.cs" />
+    <Compile Include="XMLModel\CategoryNameType.cs" />
+    <Compile Include="XMLModel\CertificateTypeCodeType.cs" />
+    <Compile Include="XMLModel\CertificateTypeType.cs" />
+    <Compile Include="XMLModel\ChangeConditionsType.cs" />
+    <Compile Include="XMLModel\ChannelCodeType.cs" />
+    <Compile Include="XMLModel\ChannelType.cs" />
+    <Compile Include="XMLModel\CharacteristicsType.cs" />
+    <Compile Include="XMLModel\CharacterSetCodeType.cs" />
+    <Compile Include="XMLModel\ChargeableQuantityType.cs" />
+    <Compile Include="XMLModel\ChargeableWeightMeasureType.cs" />
+    <Compile Include="XMLModel\ChargeIndicatorType.cs" />
+    <Compile Include="XMLModel\ChargeTotalAmountType.cs" />
+    <Compile Include="XMLModel\ChildConsignmentQuantityType.cs" />
+    <Compile Include="XMLModel\ChipApplicationIDType.cs" />
+    <Compile Include="XMLModel\CityNameType.cs" />
+    <Compile Include="XMLModel\CitySubdivisionNameType.cs" />
+    <Compile Include="XMLModel\ClassificationCategoryType.cs" />
+    <Compile Include="XMLModel\ClassificationSchemeType.cs" />
+    <Compile Include="XMLModel\ClauseType.cs" />
+    <Compile Include="XMLModel\CodeType.cs" />
+    <Compile Include="XMLModel\CodeType1.cs" />
+    <Compile Include="XMLModel\CodeValueType.cs" />
+    <Compile Include="XMLModel\CollaborationPriorityCodeType.cs" />
+    <Compile Include="XMLModel\CommentType.cs" />
+    <Compile Include="XMLModel\CommodityClassificationType.cs" />
+    <Compile Include="XMLModel\CommodityCodeType.cs" />
+    <Compile Include="XMLModel\CommunicationType.cs" />
+    <Compile Include="XMLModel\CompanyIDType.cs" />
+    <Compile Include="XMLModel\CompanyLegalFormCodeType.cs" />
+    <Compile Include="XMLModel\CompanyLegalFormType.cs" />
+    <Compile Include="XMLModel\CompanyLiquidationStatusCodeType.cs" />
+    <Compile Include="XMLModel\ComparedValueMeasureType.cs" />
+    <Compile Include="XMLModel\ComparisonDataCodeType.cs" />
+    <Compile Include="XMLModel\ComparisonDataSourceCodeType.cs" />
+    <Compile Include="XMLModel\ComparisonForecastIssueDateType.cs" />
+    <Compile Include="XMLModel\ComparisonForecastIssueTimeType.cs" />
+    <Compile Include="XMLModel\CompletedTaskType.cs" />
+    <Compile Include="XMLModel\CompletionIndicatorType.cs" />
+    <Compile Include="XMLModel\ConditionCodeType.cs" />
+    <Compile Include="XMLModel\ConditionsDescriptionType.cs" />
+    <Compile Include="XMLModel\ConditionsType.cs" />
+    <Compile Include="XMLModel\ConditionType.cs" />
+    <Compile Include="XMLModel\ConditionType1.cs" />
+    <Compile Include="XMLModel\ConsigneeAssignedIDType.cs" />
+    <Compile Include="XMLModel\ConsignmentQuantityType.cs" />
+    <Compile Include="XMLModel\ConsignmentType.cs" />
+    <Compile Include="XMLModel\ConsignorAssignedIDType.cs" />
+    <Compile Include="XMLModel\ConsolidatableIndicatorType.cs" />
+    <Compile Include="XMLModel\ConstitutionCodeType.cs" />
+    <Compile Include="XMLModel\ConsumerIncentiveTacticTypeCodeType.cs" />
+    <Compile Include="XMLModel\ConsumersEnergyLevelCodeType.cs" />
+    <Compile Include="XMLModel\ConsumersEnergyLevelType.cs" />
+    <Compile Include="XMLModel\ConsumerUnitQuantityType.cs" />
+    <Compile Include="XMLModel\ConsumptionAverageType.cs" />
+    <Compile Include="XMLModel\ConsumptionCorrectionType.cs" />
+    <Compile Include="XMLModel\ConsumptionEnergyQuantityType.cs" />
+    <Compile Include="XMLModel\ConsumptionHistoryType.cs" />
+    <Compile Include="XMLModel\ConsumptionIDType.cs" />
+    <Compile Include="XMLModel\ConsumptionLevelCodeType.cs" />
+    <Compile Include="XMLModel\ConsumptionLevelType.cs" />
+    <Compile Include="XMLModel\ConsumptionLineType.cs" />
+    <Compile Include="XMLModel\ConsumptionPointType.cs" />
+    <Compile Include="XMLModel\ConsumptionReportIDType.cs" />
+    <Compile Include="XMLModel\ConsumptionReportReferenceType.cs" />
+    <Compile Include="XMLModel\ConsumptionReportType.cs" />
+    <Compile Include="XMLModel\ConsumptionType.cs" />
+    <Compile Include="XMLModel\ConsumptionTypeCodeType.cs" />
+    <Compile Include="XMLModel\ConsumptionTypeType.cs" />
+    <Compile Include="XMLModel\ConsumptionWaterQuantityType.cs" />
+    <Compile Include="XMLModel\ContactType.cs" />
+    <Compile Include="XMLModel\ContainerizedIndicatorType.cs" />
+    <Compile Include="XMLModel\ContentType.cs" />
+    <Compile Include="XMLModel\ContentUnitQuantityType.cs" />
+    <Compile Include="XMLModel\ContractedCarrierAssignedIDType.cs" />
+    <Compile Include="XMLModel\ContractExecutionRequirementType.cs" />
+    <Compile Include="XMLModel\ContractExtensionType.cs" />
+    <Compile Include="XMLModel\ContractFolderIDType.cs" />
+    <Compile Include="XMLModel\ContractingPartyTypeType.cs" />
+    <Compile Include="XMLModel\ContractingSystemCodeType.cs" />
+    <Compile Include="XMLModel\ContractNameType.cs" />
+    <Compile Include="XMLModel\ContractSubdivisionType.cs" />
+    <Compile Include="XMLModel\ContractType.cs" />
+    <Compile Include="XMLModel\ContractTypeCodeType.cs" />
+    <Compile Include="XMLModel\ContractTypeType.cs" />
+    <Compile Include="XMLModel\CoordinateSystemCodeType.cs" />
+    <Compile Include="XMLModel\CopyIndicatorType.cs" />
+    <Compile Include="XMLModel\CorporateRegistrationSchemeType.cs" />
+    <Compile Include="XMLModel\CorporateRegistrationTypeCodeType.cs" />
+    <Compile Include="XMLModel\CorporateStockAmountType.cs" />
+    <Compile Include="XMLModel\CorrectionAmountType.cs" />
+    <Compile Include="XMLModel\CorrectionTypeCodeType.cs" />
+    <Compile Include="XMLModel\CorrectionTypeType.cs" />
+    <Compile Include="XMLModel\CorrectionUnitAmountType.cs" />
+    <Compile Include="XMLModel\CountrySubentityCodeType.cs" />
+    <Compile Include="XMLModel\CountrySubentityType.cs" />
+    <Compile Include="XMLModel\CountryType.cs" />
+    <Compile Include="XMLModel\CreditAccountType.cs" />
+    <Compile Include="XMLModel\CreditedQuantityType.cs" />
+    <Compile Include="XMLModel\CreditLineAmountType.cs" />
+    <Compile Include="XMLModel\CreditNoteLineType.cs" />
+    <Compile Include="XMLModel\CreditNoteTypeCodeType.cs" />
+    <Compile Include="XMLModel\CrewQuantityType.cs" />
+    <Compile Include="XMLModel\CurrencyCodeType.cs" />
+    <Compile Include="XMLModel\CurrentChargeTypeCodeType.cs" />
+    <Compile Include="XMLModel\CurrentChargeTypeType.cs" />
+    <Compile Include="XMLModel\CustomerAssignedAccountIDType.cs" />
+    <Compile Include="XMLModel\CustomerPartyType.cs" />
+    <Compile Include="XMLModel\CustomerReferenceType.cs" />
+    <Compile Include="XMLModel\CustomizationIDType.cs" />
+    <Compile Include="XMLModel\CustomsClearanceServiceInstructionsType.cs" />
+    <Compile Include="XMLModel\CustomsDeclarationType.cs" />
+    <Compile Include="XMLModel\CustomsImportClassifiedIndicatorType.cs" />
+    <Compile Include="XMLModel\CustomsStatusCodeType.cs" />
+    <Compile Include="XMLModel\CustomsTariffQuantityType.cs" />
+    <Compile Include="XMLModel\CV2IDType.cs" />
+    <Compile Include="XMLModel\DamageRemarksType.cs" />
+    <Compile Include="XMLModel\DangerousGoodsApprovedIndicatorType.cs" />
+    <Compile Include="XMLModel\DataSendingCapabilityType.cs" />
+    <Compile Include="XMLModel\DataSourceCodeType.cs" />
+    <Compile Include="XMLModel\DateType.cs" />
+    <Compile Include="XMLModel\DateType1.cs" />
+    <Compile Include="XMLModel\DebitedQuantityType.cs" />
+    <Compile Include="XMLModel\DebitLineAmountType.cs" />
+    <Compile Include="XMLModel\DebitNoteLineType.cs" />
+    <Compile Include="XMLModel\DeclarationType.cs" />
+    <Compile Include="XMLModel\DeclarationTypeCodeType.cs" />
+    <Compile Include="XMLModel\DeclaredCarriageValueAmountType.cs" />
+    <Compile Include="XMLModel\DeclaredCustomsValueAmountType.cs" />
+    <Compile Include="XMLModel\DeclaredForCarriageValueAmountType.cs" />
+    <Compile Include="XMLModel\DeclaredStatisticsValueAmountType.cs" />
+    <Compile Include="XMLModel\DeliveredQuantityType.cs" />
+    <Compile Include="XMLModel\DeliveryInstructionsType.cs" />
+    <Compile Include="XMLModel\DeliveryTermsType.cs" />
+    <Compile Include="XMLModel\DeliveryType.cs" />
+    <Compile Include="XMLModel\DeliveryUnitType.cs" />
+    <Compile Include="XMLModel\DemurrageInstructionsType.cs" />
+    <Compile Include="XMLModel\DepartmentType.cs" />
+    <Compile Include="XMLModel\DependentPriceReferenceType.cs" />
+    <Compile Include="XMLModel\DescriptionCodeType.cs" />
+    <Compile Include="XMLModel\DescriptionType.cs" />
+    <Compile Include="XMLModel\DespatchAdviceTypeCodeType.cs" />
+    <Compile Include="XMLModel\DespatchType.cs" />
+    <Compile Include="XMLModel\DifferenceTemperatureReductionQuantityType.cs" />
+    <Compile Include="XMLModel\DimensionType.cs" />
+    <Compile Include="XMLModel\DirectionCodeType.cs" />
+    <Compile Include="XMLModel\DisplayTacticTypeCodeType.cs" />
+    <Compile Include="XMLModel\DispositionCodeType.cs" />
+    <Compile Include="XMLModel\DistrictType.cs" />
+    <Compile Include="XMLModel\DocumentationFeeAmountType.cs" />
+    <Compile Include="XMLModel\DocumentCurrencyCodeType.cs" />
+    <Compile Include="XMLModel\DocumentDescriptionType.cs" />
+    <Compile Include="XMLModel\DocumentHashType.cs" />
+    <Compile Include="XMLModel\DocumentIDType.cs" />
+    <Compile Include="XMLModel\DocumentReferenceType.cs" />
+    <Compile Include="XMLModel\DocumentStatusCodeType.cs" />
+    <Compile Include="XMLModel\DocumentStatusReasonCodeType.cs" />
+    <Compile Include="XMLModel\DocumentStatusReasonDescriptionType.cs" />
+    <Compile Include="XMLModel\DocumentTypeCodeType.cs" />
+    <Compile Include="XMLModel\DocumentTypeType.cs" />
+    <Compile Include="XMLModel\DueDateType.cs" />
+    <Compile Include="XMLModel\DurationMeasureType.cs" />
+    <Compile Include="XMLModel\DutyCodeType.cs" />
+    <Compile Include="XMLModel\DutyType.cs" />
+    <Compile Include="XMLModel\DutyType1.cs" />
+    <Compile Include="XMLModel\EarliestPickupDateType.cs" />
+    <Compile Include="XMLModel\EarliestPickupTimeType.cs" />
+    <Compile Include="XMLModel\EconomicOperatorRegistryURIType.cs" />
+    <Compile Include="XMLModel\EconomicOperatorRoleType.cs" />
+    <Compile Include="XMLModel\EconomicOperatorShortListType.cs" />
+    <Compile Include="XMLModel\EffectiveDateType.cs" />
+    <Compile Include="XMLModel\EffectiveTimeType.cs" />
+    <Compile Include="XMLModel\ElectronicDeviceDescriptionType.cs" />
+    <Compile Include="XMLModel\ElectronicMailType.cs" />
+    <Compile Include="XMLModel\EmbeddedDocumentBinaryObjectType.cs" />
+    <Compile Include="XMLModel\EmergencyProceduresCodeType.cs" />
+    <Compile Include="XMLModel\EmissionCalculationMethodType.cs" />
+    <Compile Include="XMLModel\EmployeeQuantityType.cs" />
+    <Compile Include="XMLModel\EncodingCodeType.cs" />
+    <Compile Include="XMLModel\EndDateType.cs" />
+    <Compile Include="XMLModel\EndorserPartyType.cs" />
+    <Compile Include="XMLModel\EndpointIDType.cs" />
+    <Compile Include="XMLModel\EndTimeType.cs" />
+    <Compile Include="XMLModel\EnergyTaxReportType.cs" />
+    <Compile Include="XMLModel\EnergyWaterSupplyType.cs" />
+    <Compile Include="XMLModel\EnvironmentalEmissionType.cs" />
+    <Compile Include="XMLModel\EnvironmentalEmissionTypeCodeType.cs" />
+    <Compile Include="XMLModel\EstimatedAmountType.cs" />
+    <Compile Include="XMLModel\EstimatedConsumedQuantityType.cs" />
+    <Compile Include="XMLModel\EstimatedDeliveryDateType.cs" />
+    <Compile Include="XMLModel\EstimatedDeliveryTimeType.cs" />
+    <Compile Include="XMLModel\EstimatedDespatchDateType.cs" />
+    <Compile Include="XMLModel\EstimatedDespatchTimeType.cs" />
+    <Compile Include="XMLModel\EstimatedOverallContractAmountType.cs" />
+    <Compile Include="XMLModel\EstimatedOverallContractQuantityType.cs" />
+    <Compile Include="XMLModel\EvaluationCriterionType.cs" />
+    <Compile Include="XMLModel\EvaluationCriterionTypeCodeType.cs" />
+    <Compile Include="XMLModel\EventLineItemType.cs" />
+    <Compile Include="XMLModel\EventTacticEnumerationType.cs" />
+    <Compile Include="XMLModel\EventTacticType.cs" />
+    <Compile Include="XMLModel\EventType.cs" />
+    <Compile Include="XMLModel\EvidenceSuppliedType.cs" />
+    <Compile Include="XMLModel\EvidenceType.cs" />
+    <Compile Include="XMLModel\EvidenceTypeCodeType.cs" />
+    <Compile Include="XMLModel\ExceptionNotificationLineType.cs" />
+    <Compile Include="XMLModel\ExceptionResolutionCodeType.cs" />
+    <Compile Include="XMLModel\ExceptionStatusCodeType.cs" />
+    <Compile Include="XMLModel\ExchangeMarketIDType.cs" />
+    <Compile Include="XMLModel\ExchangeRateType.cs" />
+    <Compile Include="XMLModel\ExclusionReasonType.cs" />
+    <Compile Include="XMLModel\ExecutionRequirementCodeType.cs" />
+    <Compile Include="XMLModel\ExemptionReasonCodeType.cs" />
+    <Compile Include="XMLModel\ExemptionReasonType.cs" />
+    <Compile Include="XMLModel\ExpectedOperatorQuantityType.cs" />
+    <Compile Include="XMLModel\ExpectedQuantityType.cs" />
+    <Compile Include="XMLModel\ExpenseCodeType.cs" />
+    <Compile Include="XMLModel\ExpiryDateType.cs" />
+    <Compile Include="XMLModel\ExpiryTimeType.cs" />
+    <Compile Include="XMLModel\ExpressionCodeType.cs" />
+    <Compile Include="XMLModel\ExpressionType.cs" />
+    <Compile Include="XMLModel\ExtendedIDType.cs" />
+    <Compile Include="XMLModel\ExtensionAgencyIDType.cs" />
+    <Compile Include="XMLModel\ExtensionAgencyNameType.cs" />
+    <Compile Include="XMLModel\ExtensionAgencyURIType.cs" />
+    <Compile Include="XMLModel\ExtensionContentType.cs" />
+    <Compile Include="XMLModel\ExtensionReasonCodeType.cs" />
+    <Compile Include="XMLModel\ExtensionReasonType.cs" />
+    <Compile Include="XMLModel\ExtensionType.cs" />
+    <Compile Include="XMLModel\ExtensionURIType.cs" />
+    <Compile Include="XMLModel\ExtensionVersionIDType.cs" />
+    <Compile Include="XMLModel\ExternalReferenceType.cs" />
+    <Compile Include="XMLModel\FaceValueAmountType.cs" />
+    <Compile Include="XMLModel\FamilyNameType.cs" />
+    <Compile Include="XMLModel\FeatureTacticTypeCodeType.cs" />
+    <Compile Include="XMLModel\FeeAmountType.cs" />
+    <Compile Include="XMLModel\FeeDescriptionType.cs" />
+    <Compile Include="XMLModel\FileNameType.cs" />
+    <Compile Include="XMLModel\FinancialAccountType.cs" />
+    <Compile Include="XMLModel\FinancialGuaranteeType.cs" />
+    <Compile Include="XMLModel\FinancialInstitutionType.cs" />
+    <Compile Include="XMLModel\FinancingInstrumentCodeType.cs" />
+    <Compile Include="XMLModel\FirstNameType.cs" />
+    <Compile Include="XMLModel\FirstShipmentAvailibilityDateType.cs" />
+    <Compile Include="XMLModel\FloorType.cs" />
+    <Compile Include="XMLModel\FollowupContractIndicatorType.cs" />
+    <Compile Include="XMLModel\ForecastExceptionCriterionLineType.cs" />
+    <Compile Include="XMLModel\ForecastExceptionType.cs" />
+    <Compile Include="XMLModel\ForecastLineType.cs" />
+    <Compile Include="XMLModel\ForecastPurposeCodeType.cs" />
+    <Compile Include="XMLModel\ForecastRevisionLineType.cs" />
+    <Compile Include="XMLModel\ForecastTypeCodeType.cs" />
+    <Compile Include="XMLModel\FormatCodeType.cs" />
+    <Compile Include="XMLModel\ForwarderServiceInstructionsType.cs" />
+    <Compile Include="XMLModel\FrameworkAgreementType.cs" />
+    <Compile Include="XMLModel\FreeOfChargeIndicatorType.cs" />
+    <Compile Include="XMLModel\FreeOnBoardValueAmountType.cs" />
+    <Compile Include="XMLModel\FreightForwarderAssignedIDType.cs" />
+    <Compile Include="XMLModel\FreightRateClassCodeType.cs" />
+    <Compile Include="XMLModel\FrequencyType.cs" />
+    <Compile Include="XMLModel\FrozenDocumentIndicatorType.cs" />
+    <Compile Include="XMLModel\FrozenPeriodDaysNumericType.cs" />
+    <Compile Include="XMLModel\FullnessIndicationCodeType.cs" />
+    <Compile Include="XMLModel\FullyPaidSharesIndicatorType.cs" />
+    <Compile Include="XMLModel\FundingProgramCodeType.cs" />
+    <Compile Include="XMLModel\FundingProgramType.cs" />
+    <Compile Include="XMLModel\GasPressureQuantityType.cs" />
+    <Compile Include="XMLModel\GenderCodeType.cs" />
+    <Compile Include="XMLModel\GeneralCargoIndicatorType.cs" />
+    <Compile Include="XMLModel\GoodsItemContainerType.cs" />
+    <Compile Include="XMLModel\GoodsItemType.cs" />
+    <Compile Include="XMLModel\GovernmentAgreementConstraintIndicatorType.cs" />
+    <Compile Include="XMLModel\GraphicType.cs" />
+    <Compile Include="XMLModel\GrossTonnageMeasureType.cs" />
+    <Compile Include="XMLModel\GrossVolumeMeasureType.cs" />
+    <Compile Include="XMLModel\GrossWeightMeasureType.cs" />
+    <Compile Include="XMLModel\GuaranteedDespatchDateType.cs" />
+    <Compile Include="XMLModel\GuaranteedDespatchTimeType.cs" />
+    <Compile Include="XMLModel\GuaranteeTypeCodeType.cs" />
+    <Compile Include="XMLModel\HandlingCodeType.cs" />
+    <Compile Include="XMLModel\HandlingInstructionsType.cs" />
+    <Compile Include="XMLModel\HashAlgorithmMethodType.cs" />
+    <Compile Include="XMLModel\HaulageInstructionsType.cs" />
+    <Compile Include="XMLModel\HazardClassIDType.cs" />
+    <Compile Include="XMLModel\HazardousCategoryCodeType.cs" />
+    <Compile Include="XMLModel\HazardousGoodsTransitType.cs" />
+    <Compile Include="XMLModel\HazardousRegulationCodeType.cs" />
+    <Compile Include="XMLModel\HazardousRiskIndicatorType.cs" />
+    <Compile Include="XMLModel\HeatingTypeCodeType.cs" />
+    <Compile Include="XMLModel\HeatingTypeType.cs" />
+    <Compile Include="XMLModel\HigherTenderAmountType.cs" />
+    <Compile Include="XMLModel\HolderNameType.cs" />
+    <Compile Include="XMLModel\HumanFoodApprovedIndicatorType.cs" />
+    <Compile Include="XMLModel\HumanFoodIndicatorType.cs" />
+    <Compile Include="XMLModel\HumidityPercentType.cs" />
+    <Compile Include="XMLModel\IdentificationCodeType.cs" />
+    <Compile Include="XMLModel\IdentificationIDType.cs" />
+    <Compile Include="XMLModel\IdentifierType.cs" />
+    <Compile Include="XMLModel\IdentifierType1.cs" />
+    <Compile Include="XMLModel\IDType.cs" />
+    <Compile Include="XMLModel\ImmobilizationCertificateIDType.cs" />
+    <Compile Include="XMLModel\ImportanceCodeType.cs" />
+    <Compile Include="XMLModel\IndicationIndicatorType.cs" />
+    <Compile Include="XMLModel\IndicatorType.cs" />
+    <Compile Include="XMLModel\IndustryClassificationCodeType.cs" />
+    <Compile Include="XMLModel\InformationType.cs" />
+    <Compile Include="XMLModel\InformationURIType.cs" />
+    <Compile Include="XMLModel\InhalationToxicityZoneCodeType.cs" />
+    <Compile Include="XMLModel\InhouseMailType.cs" />
+    <Compile Include="XMLModel\InspectionMethodCodeType.cs" />
+    <Compile Include="XMLModel\InstallmentDueDateType.cs" />
+    <Compile Include="XMLModel\InstructionIDType.cs" />
+    <Compile Include="XMLModel\InstructionNoteType.cs" />
+    <Compile Include="XMLModel\InstructionsType.cs" />
+    <Compile Include="XMLModel\InsurancePremiumAmountType.cs" />
+    <Compile Include="XMLModel\InsuranceValueAmountType.cs" />
+    <Compile Include="XMLModel\InventoryValueAmountType.cs" />
+    <Compile Include="XMLModel\InvoicedQuantityType.cs" />
+    <Compile Include="XMLModel\InvoiceLineType.cs" />
+    <Compile Include="XMLModel\InvoiceType.cs" />
+    <Compile Include="XMLModel\InvoiceTypeCodeType.cs" />
+    <Compile Include="XMLModel\InvoicingPartyReferenceType.cs" />
+    <Compile Include="XMLModel\IssueDateType.cs" />
+    <Compile Include="XMLModel\IssueNumberIDType.cs" />
+    <Compile Include="XMLModel\IssuerIDType.cs" />
+    <Compile Include="XMLModel\IssueTimeType.cs" />
+    <Compile Include="XMLModel\ItemClassificationCodeType.cs" />
+    <Compile Include="XMLModel\ItemIdentificationType.cs" />
+    <Compile Include="XMLModel\ItemInstanceType.cs" />
+    <Compile Include="XMLModel\ItemLocationQuantityType.cs" />
+    <Compile Include="XMLModel\ItemPropertyGroupType.cs" />
+    <Compile Include="XMLModel\ItemPropertyRangeType.cs" />
+    <Compile Include="XMLModel\ItemPropertyType.cs" />
+    <Compile Include="XMLModel\ItemType.cs" />
+    <Compile Include="XMLModel\ItemUpdateRequestIndicatorType.cs" />
+    <Compile Include="XMLModel\JobTitleType.cs" />
+    <Compile Include="XMLModel\JourneyIDType.cs" />
+    <Compile Include="XMLModel\JustificationDescriptionType.cs" />
+    <Compile Include="XMLModel\JustificationType.cs" />
+    <Compile Include="XMLModel\KeywordType.cs" />
+    <Compile Include="XMLModel\LanguageIDType.cs" />
+    <Compile Include="XMLModel\LanguageType.cs" />
+    <Compile Include="XMLModel\LastRevisionDateType.cs" />
+    <Compile Include="XMLModel\LastRevisionTimeType.cs" />
+    <Compile Include="XMLModel\LatestDeliveryDateType.cs" />
+    <Compile Include="XMLModel\LatestDeliveryTimeType.cs" />
+    <Compile Include="XMLModel\LatestMeterQuantityType.cs" />
+    <Compile Include="XMLModel\LatestMeterReadingDateType.cs" />
+    <Compile Include="XMLModel\LatestMeterReadingMethodCodeType.cs" />
+    <Compile Include="XMLModel\LatestMeterReadingMethodType.cs" />
+    <Compile Include="XMLModel\LatestPickupDateType.cs" />
+    <Compile Include="XMLModel\LatestPickupTimeType.cs" />
+    <Compile Include="XMLModel\LatestProposalAcceptanceDateType.cs" />
+    <Compile Include="XMLModel\LatestSecurityClearanceDateType.cs" />
+    <Compile Include="XMLModel\LatitudeDegreesMeasureType.cs" />
+    <Compile Include="XMLModel\LatitudeDirectionCodeType.cs" />
+    <Compile Include="XMLModel\LatitudeMinutesMeasureType.cs" />
+    <Compile Include="XMLModel\LeadTimeMeasureType.cs" />
+    <Compile Include="XMLModel\LegalReferenceType.cs" />
+    <Compile Include="XMLModel\LegalStatusIndicatorType.cs" />
+    <Compile Include="XMLModel\LiabilityAmountType.cs" />
+    <Compile Include="XMLModel\LicensePlateIDType.cs" />
+    <Compile Include="XMLModel\LifeCycleStatusCodeType.cs" />
+    <Compile Include="XMLModel\LimitationDescriptionType.cs" />
+    <Compile Include="XMLModel\LineCountNumericType.cs" />
+    <Compile Include="XMLModel\LineExtensionAmountType.cs" />
+    <Compile Include="XMLModel\LineIDType.cs" />
+    <Compile Include="XMLModel\LineItemType.cs" />
+    <Compile Include="XMLModel\LineNumberNumericType.cs" />
+    <Compile Include="XMLModel\LineReferenceType.cs" />
+    <Compile Include="XMLModel\LineStatusCodeType.cs" />
+    <Compile Include="XMLModel\LineType.cs" />
+    <Compile Include="XMLModel\ListValueType.cs" />
+    <Compile Include="XMLModel\LivestockIndicatorType.cs" />
+    <Compile Include="XMLModel\LoadingLengthMeasureType.cs" />
+    <Compile Include="XMLModel\LoadingSequenceIDType.cs" />
+    <Compile Include="XMLModel\LocaleCodeType.cs" />
+    <Compile Include="XMLModel\LocationIDType.cs" />
+    <Compile Include="XMLModel\LocationType.cs" />
+    <Compile Include="XMLModel\LocationType1.cs" />
+    <Compile Include="XMLModel\LocationTypeCodeType.cs" />
+    <Compile Include="XMLModel\LoginType.cs" />
+    <Compile Include="XMLModel\LogoReferenceIDType.cs" />
+    <Compile Include="XMLModel\LongitudeDegreesMeasureType.cs" />
+    <Compile Include="XMLModel\LongitudeDirectionCodeType.cs" />
+    <Compile Include="XMLModel\LongitudeMinutesMeasureType.cs" />
+    <Compile Include="XMLModel\LossRiskResponsibilityCodeType.cs" />
+    <Compile Include="XMLModel\LossRiskType.cs" />
+    <Compile Include="XMLModel\LotIdentificationType.cs" />
+    <Compile Include="XMLModel\LotNumberIDType.cs" />
+    <Compile Include="XMLModel\LowerOrangeHazardPlacardIDType.cs" />
+    <Compile Include="XMLModel\LowerTenderAmountType.cs" />
+    <Compile Include="XMLModel\LowTendersDescriptionType.cs" />
+    <Compile Include="XMLModel\MandateTypeCodeType.cs" />
+    <Compile Include="XMLModel\ManufactureDateType.cs" />
+    <Compile Include="XMLModel\ManufactureTimeType.cs" />
+    <Compile Include="XMLModel\MaritimeTransportType.cs" />
+    <Compile Include="XMLModel\MarkAttentionIndicatorType.cs" />
+    <Compile Include="XMLModel\MarkAttentionType.cs" />
+    <Compile Include="XMLModel\MarkCareIndicatorType.cs" />
+    <Compile Include="XMLModel\MarkCareType.cs" />
+    <Compile Include="XMLModel\MarketValueAmountType.cs" />
+    <Compile Include="XMLModel\MarkingIDType.cs" />
+    <Compile Include="XMLModel\MathematicOperatorCodeType.cs" />
+    <Compile Include="XMLModel\MaximumAdvertisementAmountType.cs" />
+    <Compile Include="XMLModel\MaximumAmountType.cs" />
+    <Compile Include="XMLModel\MaximumBackorderQuantityType.cs" />
+    <Compile Include="XMLModel\MaximumCopiesNumericType.cs" />
+    <Compile Include="XMLModel\MaximumMeasureType.cs" />
+    <Compile Include="XMLModel\MaximumNumberNumericType.cs" />
+    <Compile Include="XMLModel\MaximumOperatorQuantityType.cs" />
+    <Compile Include="XMLModel\MaximumOrderQuantityType.cs" />
+    <Compile Include="XMLModel\MaximumPaidAmountType.cs" />
+    <Compile Include="XMLModel\MaximumPaymentInstructionsNumericType.cs" />
+    <Compile Include="XMLModel\MaximumPercentType.cs" />
+    <Compile Include="XMLModel\MaximumQuantityType.cs" />
+    <Compile Include="XMLModel\MaximumValueType.cs" />
+    <Compile Include="XMLModel\MaximumVariantQuantityType.cs" />
+    <Compile Include="XMLModel\MeasureType.cs" />
+    <Compile Include="XMLModel\MeasureType1.cs" />
+    <Compile Include="XMLModel\MeasureType2.cs" />
+    <Compile Include="XMLModel\MedicalFirstAidGuideCodeType.cs" />
+    <Compile Include="XMLModel\MeterConstantCodeType.cs" />
+    <Compile Include="XMLModel\MeterConstantType.cs" />
+    <Compile Include="XMLModel\MeterNameType.cs" />
+    <Compile Include="XMLModel\MeterNumberType.cs" />
+    <Compile Include="XMLModel\MeterPropertyType.cs" />
+    <Compile Include="XMLModel\MeterReadingCommentsType.cs" />
+    <Compile Include="XMLModel\MeterReadingType.cs" />
+    <Compile Include="XMLModel\MeterReadingTypeCodeType.cs" />
+    <Compile Include="XMLModel\MeterReadingTypeType.cs" />
+    <Compile Include="XMLModel\MeterType.cs" />
+    <Compile Include="XMLModel\MiddleNameType.cs" />
+    <Compile Include="XMLModel\MimeCodeType.cs" />
+    <Compile Include="XMLModel\MinimumAmountType.cs" />
+    <Compile Include="XMLModel\MinimumBackorderQuantityType.cs" />
+    <Compile Include="XMLModel\MinimumImprovementBidType.cs" />
+    <Compile Include="XMLModel\MinimumInventoryQuantityType.cs" />
+    <Compile Include="XMLModel\MinimumMeasureType.cs" />
+    <Compile Include="XMLModel\MinimumNumberNumericType.cs" />
+    <Compile Include="XMLModel\MinimumOrderQuantityType.cs" />
+    <Compile Include="XMLModel\MinimumPercentType.cs" />
+    <Compile Include="XMLModel\MinimumQuantityType.cs" />
+    <Compile Include="XMLModel\MinimumValueType.cs" />
+    <Compile Include="XMLModel\MiscellaneousEventType.cs" />
+    <Compile Include="XMLModel\MiscellaneousEventTypeCodeType.cs" />
+    <Compile Include="XMLModel\ModelNameType.cs" />
+    <Compile Include="XMLModel\MonetaryScopeType.cs" />
+    <Compile Include="XMLModel\MonetaryTotalType.cs" />
+    <Compile Include="XMLModel\MovieTitleType.cs" />
+    <Compile Include="XMLModel\MultipleOrderQuantityType.cs" />
+    <Compile Include="XMLModel\MultiplierFactorNumericType.cs" />
+    <Compile Include="XMLModel\NameCodeType.cs" />
+    <Compile Include="XMLModel\NameSuffixType.cs" />
+    <Compile Include="XMLModel\NameType.cs" />
+    <Compile Include="XMLModel\NameType1.cs" />
+    <Compile Include="XMLModel\NationalityIDType.cs" />
+    <Compile Include="XMLModel\NatureCodeType.cs" />
+    <Compile Include="XMLModel\NegotiationDescriptionType.cs" />
+    <Compile Include="XMLModel\NetNetWeightMeasureType.cs" />
+    <Compile Include="XMLModel\NetTonnageMeasureType.cs" />
+    <Compile Include="XMLModel\NetVolumeMeasureType.cs" />
+    <Compile Include="XMLModel\NetWeightMeasureType.cs" />
+    <Compile Include="XMLModel\NetworkIDType.cs" />
+    <Compile Include="XMLModel\NominationDateType.cs" />
+    <Compile Include="XMLModel\NominationTimeType.cs" />
+    <Compile Include="XMLModel\NormalTemperatureReductionQuantityType.cs" />
+    <Compile Include="XMLModel\NoteType.cs" />
+    <Compile Include="XMLModel\NotificationTypeCodeType.cs" />
+    <Compile Include="XMLModel\NumericType.cs" />
+    <Compile Include="XMLModel\NumericType1.cs" />
+    <Compile Include="XMLModel\OccurrenceDateType.cs" />
+    <Compile Include="XMLModel\OccurrenceTimeType.cs" />
+    <Compile Include="XMLModel\OnAccountPaymentType.cs" />
+    <Compile Include="XMLModel\OnCarriageIndicatorType.cs" />
+    <Compile Include="XMLModel\OneTimeChargeTypeCodeType.cs" />
+    <Compile Include="XMLModel\OneTimeChargeTypeType.cs" />
+    <Compile Include="XMLModel\OntologyURIType.cs" />
+    <Compile Include="XMLModel\OpenTenderIDType.cs" />
+    <Compile Include="XMLModel\OperatingYearsQuantityType.cs" />
+    <Compile Include="XMLModel\OptionalLineItemIndicatorType.cs" />
+    <Compile Include="XMLModel\OptionsDescriptionType.cs" />
+    <Compile Include="XMLModel\OrderableIndicatorType.cs" />
+    <Compile Include="XMLModel\OrderableUnitFactorRateType.cs" />
+    <Compile Include="XMLModel\OrderableUnitType.cs" />
+    <Compile Include="XMLModel\OrderedShipmentType.cs" />
+    <Compile Include="XMLModel\OrderIntervalDaysNumericType.cs" />
+    <Compile Include="XMLModel\OrderLineReferenceType.cs" />
+    <Compile Include="XMLModel\OrderQuantityIncrementNumericType.cs" />
+    <Compile Include="XMLModel\OrderReferenceType.cs" />
+    <Compile Include="XMLModel\OrderResponseCodeType.cs" />
+    <Compile Include="XMLModel\OrderTypeCodeType.cs" />
+    <Compile Include="XMLModel\OrganizationDepartmentType.cs" />
+    <Compile Include="XMLModel\OriginalContractingSystemIDType.cs" />
+    <Compile Include="XMLModel\OriginalJobIDType.cs" />
+    <Compile Include="XMLModel\OtherConditionsIndicatorType.cs" />
+    <Compile Include="XMLModel\OtherInstructionType.cs" />
+    <Compile Include="XMLModel\OtherNameType.cs" />
+    <Compile Include="XMLModel\OutstandingQuantityType.cs" />
+    <Compile Include="XMLModel\OutstandingReasonType.cs" />
+    <Compile Include="XMLModel\OversupplyQuantityType.cs" />
+    <Compile Include="XMLModel\OwnerTypeCodeType.cs" />
+    <Compile Include="XMLModel\PackageLevelCodeType.cs" />
+    <Compile Include="XMLModel\PackageType.cs" />
+    <Compile Include="XMLModel\PackagingTypeCodeType.cs" />
+    <Compile Include="XMLModel\PackingCriteriaCodeType.cs" />
+    <Compile Include="XMLModel\PackingMaterialType.cs" />
+    <Compile Include="XMLModel\PackLevelCodeType.cs" />
+    <Compile Include="XMLModel\PackQuantityType.cs" />
+    <Compile Include="XMLModel\PackSizeNumericType.cs" />
+    <Compile Include="XMLModel\PaidAmountType.cs" />
+    <Compile Include="XMLModel\PaidDateType.cs" />
+    <Compile Include="XMLModel\PaidTimeType.cs" />
+    <Compile Include="XMLModel\ParentDocumentIDType.cs" />
+    <Compile Include="XMLModel\ParentDocumentLineReferenceIDType.cs" />
+    <Compile Include="XMLModel\ParentDocumentTypeCodeType.cs" />
+    <Compile Include="XMLModel\ParentDocumentVersionIDType.cs" />
+    <Compile Include="XMLModel\PartecipationPercentType.cs" />
+    <Compile Include="XMLModel\PartialDeliveryIndicatorType.cs" />
+    <Compile Include="XMLModel\ParticipationPercentType.cs" />
+    <Compile Include="XMLModel\PartPresentationCodeType.cs" />
+    <Compile Include="XMLModel\PartyCapacityAmountType.cs" />
+    <Compile Include="XMLModel\PartyIdentificationType.cs" />
+    <Compile Include="XMLModel\PartyLegalEntityType.cs" />
+    <Compile Include="XMLModel\PartyNameType.cs" />
+    <Compile Include="XMLModel\PartyTaxSchemeType.cs" />
+    <Compile Include="XMLModel\PartyType.cs" />
+    <Compile Include="XMLModel\PartyTypeCodeType.cs" />
+    <Compile Include="XMLModel\PartyTypeType.cs" />
+    <Compile Include="XMLModel\PassengerQuantityType.cs" />
+    <Compile Include="XMLModel\PasswordType.cs" />
+    <Compile Include="XMLModel\PayableAlternativeAmountType.cs" />
+    <Compile Include="XMLModel\PayableAmountType.cs" />
+    <Compile Include="XMLModel\PayableRoundingAmountType.cs" />
+    <Compile Include="XMLModel\PayerReferenceType.cs" />
+    <Compile Include="XMLModel\PaymentAlternativeCurrencyCodeType.cs" />
+    <Compile Include="XMLModel\PaymentChannelCodeType.cs" />
+    <Compile Include="XMLModel\PaymentCurrencyCodeType.cs" />
+    <Compile Include="XMLModel\PaymentDescriptionType.cs" />
+    <Compile Include="XMLModel\PaymentDueDateType.cs" />
+    <Compile Include="XMLModel\PaymentFrequencyCodeType.cs" />
+    <Compile Include="XMLModel\PaymentIDType.cs" />
+    <Compile Include="XMLModel\PaymentMeansCodeType.cs" />
+    <Compile Include="XMLModel\PaymentMeansIDType.cs" />
+    <Compile Include="XMLModel\PaymentMeansType.cs" />
+    <Compile Include="XMLModel\PaymentNoteType.cs" />
+    <Compile Include="XMLModel\PaymentOrderReferenceType.cs" />
+    <Compile Include="XMLModel\PaymentPercentType.cs" />
+    <Compile Include="XMLModel\PaymentPurposeCodeType.cs" />
+    <Compile Include="XMLModel\PaymentTermsDetailsURIType.cs" />
+    <Compile Include="XMLModel\PaymentTermsType.cs" />
+    <Compile Include="XMLModel\PaymentType.cs" />
+    <Compile Include="XMLModel\PayPerViewType.cs" />
+    <Compile Include="XMLModel\PenaltyAmountType.cs" />
+    <Compile Include="XMLModel\PenaltySurchargePercentType.cs" />
+    <Compile Include="XMLModel\PercentType.cs" />
+    <Compile Include="XMLModel\PercentType1.cs" />
+    <Compile Include="XMLModel\PerformanceMetricTypeCodeType.cs" />
+    <Compile Include="XMLModel\PerformanceValueQuantityType.cs" />
+    <Compile Include="XMLModel\PerformingCarrierAssignedIDType.cs" />
+    <Compile Include="XMLModel\PeriodType.cs" />
+    <Compile Include="XMLModel\PersonalSituationType.cs" />
+    <Compile Include="XMLModel\PersonType.cs" />
+    <Compile Include="XMLModel\PerUnitAmountType.cs" />
+    <Compile Include="XMLModel\PhoneNumberType.cs" />
+    <Compile Include="XMLModel\PickupType.cs" />
+    <Compile Include="XMLModel\PictureType.cs" />
+    <Compile Include="XMLModel\PlacardEndorsementType.cs" />
+    <Compile Include="XMLModel\PlacardNotationType.cs" />
+    <Compile Include="XMLModel\PlannedDateType.cs" />
+    <Compile Include="XMLModel\PlotIdentificationType.cs" />
+    <Compile Include="XMLModel\PositionCodeType.cs" />
+    <Compile Include="XMLModel\PostalZoneType.cs" />
+    <Compile Include="XMLModel\PostboxType.cs" />
+    <Compile Include="XMLModel\PostEventNotificationDurationMeasureType.cs" />
+    <Compile Include="XMLModel\PowerIndicatorType.cs" />
+    <Compile Include="XMLModel\PreCarriageIndicatorType.cs" />
+    <Compile Include="XMLModel\PreEventNotificationDurationMeasureType.cs" />
+    <Compile Include="XMLModel\PreferenceCriterionCodeType.cs" />
+    <Compile Include="XMLModel\PrepaidAmountType.cs" />
+    <Compile Include="XMLModel\PrepaidIndicatorType.cs" />
+    <Compile Include="XMLModel\PrepaidPaymentReferenceIDType.cs" />
+    <Compile Include="XMLModel\PreviousCancellationReasonCodeType.cs" />
+    <Compile Include="XMLModel\PreviousJobIDType.cs" />
+    <Compile Include="XMLModel\PreviousMeterQuantityType.cs" />
+    <Compile Include="XMLModel\PreviousMeterReadingDateType.cs" />
+    <Compile Include="XMLModel\PreviousMeterReadingMethodCodeType.cs" />
+    <Compile Include="XMLModel\PreviousMeterReadingMethodType.cs" />
+    <Compile Include="XMLModel\PreviousVersionIDType.cs" />
+    <Compile Include="XMLModel\PriceAmountType.cs" />
+    <Compile Include="XMLModel\PriceChangeReasonType.cs" />
+    <Compile Include="XMLModel\PriceEvaluationCodeType.cs" />
+    <Compile Include="XMLModel\PriceExtensionType.cs" />
+    <Compile Include="XMLModel\PriceListType.cs" />
+    <Compile Include="XMLModel\PriceRevisionFormulaDescriptionType.cs" />
+    <Compile Include="XMLModel\PriceType.cs" />
+    <Compile Include="XMLModel\PriceTypeCodeType.cs" />
+    <Compile Include="XMLModel\PriceTypeType.cs" />
+    <Compile Include="XMLModel\PricingCurrencyCodeType.cs" />
+    <Compile Include="XMLModel\PricingReferenceType.cs" />
+    <Compile Include="XMLModel\PricingUpdateRequestIndicatorType.cs" />
+    <Compile Include="XMLModel\PrimaryAccountNumberIDType.cs" />
+    <Compile Include="XMLModel\PrintQualifierType.cs" />
+    <Compile Include="XMLModel\PriorityType.cs" />
+    <Compile Include="XMLModel\PrivacyCodeType.cs" />
+    <Compile Include="XMLModel\PrizeDescriptionType.cs" />
+    <Compile Include="XMLModel\PrizeIndicatorType.cs" />
+    <Compile Include="XMLModel\ProcedureCodeType.cs" />
+    <Compile Include="XMLModel\ProcessDescriptionType.cs" />
+    <Compile Include="XMLModel\ProcessJustificationType.cs" />
+    <Compile Include="XMLModel\ProcessReasonCodeType.cs" />
+    <Compile Include="XMLModel\ProcessReasonType.cs" />
+    <Compile Include="XMLModel\ProcurementProjectLotType.cs" />
+    <Compile Include="XMLModel\ProcurementProjectType.cs" />
+    <Compile Include="XMLModel\ProcurementSubTypeCodeType.cs" />
+    <Compile Include="XMLModel\ProcurementTypeCodeType.cs" />
+    <Compile Include="XMLModel\ProductTraceIDType.cs" />
+    <Compile Include="XMLModel\ProfileExecutionIDType.cs" />
+    <Compile Include="XMLModel\ProfileIDType.cs" />
+    <Compile Include="XMLModel\ProfileStatusCodeType.cs" />
+    <Compile Include="XMLModel\ProgressPercentType.cs" />
+    <Compile Include="XMLModel\PromotionalEventLineItemType.cs" />
+    <Compile Include="XMLModel\PromotionalEventTypeCodeType.cs" />
+    <Compile Include="XMLModel\PromotionalSpecificationType.cs" />
+    <Compile Include="XMLModel\ProviderTypeCodeType.cs" />
+    <Compile Include="XMLModel\PublishAwardIndicatorType.cs" />
+    <Compile Include="XMLModel\PurposeCodeType.cs" />
+    <Compile Include="XMLModel\PurposeType.cs" />
+    <Compile Include="XMLModel\QualifyingPartyType.cs" />
+    <Compile Include="XMLModel\QualityControlCodeType.cs" />
+    <Compile Include="XMLModel\QuantityDiscrepancyCodeType.cs" />
+    <Compile Include="XMLModel\QuantityType.cs" />
+    <Compile Include="XMLModel\QuantityType1.cs" />
+    <Compile Include="XMLModel\QuantityType2.cs" />
+    <Compile Include="XMLModel\RadioCallSignIDType.cs" />
+    <Compile Include="XMLModel\RailCarIDType.cs" />
+    <Compile Include="XMLModel\RailTransportType.cs" />
+    <Compile Include="XMLModel\RankType.cs" />
+    <Compile Include="XMLModel\RateType.cs" />
+    <Compile Include="XMLModel\RateType1.cs" />
+    <Compile Include="XMLModel\ReceiptAdviceTypeCodeType.cs" />
+    <Compile Include="XMLModel\ReceivedDateType.cs" />
+    <Compile Include="XMLModel\ReceivedElectronicTenderQuantityType.cs" />
+    <Compile Include="XMLModel\ReceivedForeignTenderQuantityType.cs" />
+    <Compile Include="XMLModel\ReceivedQuantityType.cs" />
+    <Compile Include="XMLModel\ReceivedTenderQuantityType.cs" />
+    <Compile Include="XMLModel\ReferenceDateType.cs" />
+    <Compile Include="XMLModel\ReferencedConsignmentIDType.cs" />
+    <Compile Include="XMLModel\ReferenceEventCodeType.cs" />
+    <Compile Include="XMLModel\ReferenceIDType.cs" />
+    <Compile Include="XMLModel\ReferenceTimeType.cs" />
+    <Compile Include="XMLModel\ReferenceType.cs" />
+    <Compile Include="XMLModel\RefrigeratedIndicatorType.cs" />
+    <Compile Include="XMLModel\RefrigerationOnIndicatorType.cs" />
+    <Compile Include="XMLModel\RegionType.cs" />
+    <Compile Include="XMLModel\RegisteredDateType.cs" />
+    <Compile Include="XMLModel\RegisteredTimeType.cs" />
+    <Compile Include="XMLModel\RegistrationDateType.cs" />
+    <Compile Include="XMLModel\RegistrationExpirationDateType.cs" />
+    <Compile Include="XMLModel\RegistrationIDType.cs" />
+    <Compile Include="XMLModel\RegistrationNameType.cs" />
+    <Compile Include="XMLModel\RegistrationNationalityIDType.cs" />
+    <Compile Include="XMLModel\RegistrationNationalityType.cs" />
+    <Compile Include="XMLModel\RegulatoryDomainType.cs" />
+    <Compile Include="XMLModel\RejectActionCodeType.cs" />
+    <Compile Include="XMLModel\RejectedQuantityType.cs" />
+    <Compile Include="XMLModel\RejectionNoteType.cs" />
+    <Compile Include="XMLModel\RejectReasonCodeType.cs" />
+    <Compile Include="XMLModel\RejectReasonType.cs" />
+    <Compile Include="XMLModel\RelatedItemType.cs" />
+    <Compile Include="XMLModel\ReleaseIDType.cs" />
+    <Compile Include="XMLModel\ReliabilityPercentType.cs" />
+    <Compile Include="XMLModel\RemarksType.cs" />
+    <Compile Include="XMLModel\ReminderSequenceNumericType.cs" />
+    <Compile Include="XMLModel\ReminderTypeCodeType.cs" />
+    <Compile Include="XMLModel\RenewalType.cs" />
+    <Compile Include="XMLModel\ReplenishmentOwnerDescriptionType.cs" />
+    <Compile Include="XMLModel\RequestedDeliveryDateType.cs" />
+    <Compile Include="XMLModel\RequestedDespatchDateType.cs" />
+    <Compile Include="XMLModel\RequestedDespatchTimeType.cs" />
+    <Compile Include="XMLModel\RequestedInvoiceCurrencyCodeType.cs" />
+    <Compile Include="XMLModel\RequestedPublicationDateType.cs" />
+    <Compile Include="XMLModel\RequestedTenderTotalType.cs" />
+    <Compile Include="XMLModel\RequestForQuotationLineIDType.cs" />
+    <Compile Include="XMLModel\RequestForTenderLineType.cs" />
+    <Compile Include="XMLModel\RequiredCurriculaIndicatorType.cs" />
+    <Compile Include="XMLModel\RequiredCustomsIDType.cs" />
+    <Compile Include="XMLModel\RequiredDeliveryDateType.cs" />
+    <Compile Include="XMLModel\RequiredDeliveryTimeType.cs" />
+    <Compile Include="XMLModel\RequiredFeeAmountType.cs" />
+    <Compile Include="XMLModel\ResidenceTypeCodeType.cs" />
+    <Compile Include="XMLModel\ResidenceTypeType.cs" />
+    <Compile Include="XMLModel\ResidentOccupantsNumericType.cs" />
+    <Compile Include="XMLModel\ResolutionCodeType.cs" />
+    <Compile Include="XMLModel\ResolutionDateType.cs" />
+    <Compile Include="XMLModel\ResolutionTimeType.cs" />
+    <Compile Include="XMLModel\ResolutionType.cs" />
+    <Compile Include="XMLModel\ResponseCodeType.cs" />
+    <Compile Include="XMLModel\ResponseDateType.cs" />
+    <Compile Include="XMLModel\ResponseTimeType.cs" />
+    <Compile Include="XMLModel\ResponseType.cs" />
+    <Compile Include="XMLModel\RetailEventNameType.cs" />
+    <Compile Include="XMLModel\RetailEventStatusCodeType.cs" />
+    <Compile Include="XMLModel\RetailPlannedImpactType.cs" />
+    <Compile Include="XMLModel\ReturnabilityIndicatorType.cs" />
+    <Compile Include="XMLModel\ReturnableMaterialIndicatorType.cs" />
+    <Compile Include="XMLModel\ReturnableQuantityType.cs" />
+    <Compile Include="XMLModel\RevisedForecastLineIDType.cs" />
+    <Compile Include="XMLModel\RevisionDateType.cs" />
+    <Compile Include="XMLModel\RevisionStatusCodeType.cs" />
+    <Compile Include="XMLModel\RevisionTimeType.cs" />
+    <Compile Include="XMLModel\RoadTransportType.cs" />
+    <Compile Include="XMLModel\RoamingPartnerNameType.cs" />
+    <Compile Include="XMLModel\RoleCodeType.cs" />
+    <Compile Include="XMLModel\RoleDescriptionType.cs" />
+    <Compile Include="XMLModel\RoomType.cs" />
+    <Compile Include="XMLModel\RoundingAmountType.cs" />
+    <Compile Include="XMLModel\SalesItemType.cs" />
+    <Compile Include="XMLModel\SalesOrderIDType.cs" />
+    <Compile Include="XMLModel\SalesOrderLineIDType.cs" />
+    <Compile Include="XMLModel\SchemeURIType.cs" />
+    <Compile Include="XMLModel\SealingPartyTypeType.cs" />
+    <Compile Include="XMLModel\SealIssuerTypeCodeType.cs" />
+    <Compile Include="XMLModel\SealStatusCodeType.cs" />
+    <Compile Include="XMLModel\SecurityClassificationCodeType.cs" />
+    <Compile Include="XMLModel\SecurityIDType.cs" />
+    <Compile Include="XMLModel\SellerEventIDType.cs" />
+    <Compile Include="XMLModel\SequenceIDType.cs" />
+    <Compile Include="XMLModel\SequenceNumberIDType.cs" />
+    <Compile Include="XMLModel\SequenceNumericType.cs" />
+    <Compile Include="XMLModel\SerialIDType.cs" />
+    <Compile Include="XMLModel\ServiceFrequencyType.cs" />
+    <Compile Include="XMLModel\ServiceInformationPreferenceCodeType.cs" />
+    <Compile Include="XMLModel\ServiceNameType.cs" />
+    <Compile Include="XMLModel\ServiceNumberCalledType.cs" />
+    <Compile Include="XMLModel\ServiceTypeCodeType.cs" />
+    <Compile Include="XMLModel\ServiceTypeType.cs" />
+    <Compile Include="XMLModel\SettlementDiscountAmountType.cs" />
+    <Compile Include="XMLModel\SettlementDiscountPercentType.cs" />
+    <Compile Include="XMLModel\SharesNumberQuantityType.cs" />
+    <Compile Include="XMLModel\ShipmentStageType.cs" />
+    <Compile Include="XMLModel\ShipmentType.cs" />
+    <Compile Include="XMLModel\ShippingMarksType.cs" />
+    <Compile Include="XMLModel\ShippingOrderIDType.cs" />
+    <Compile Include="XMLModel\ShippingPriorityLevelCodeType.cs" />
+    <Compile Include="XMLModel\ShipsRequirementsType.cs" />
+    <Compile Include="XMLModel\ShortageActionCodeType.cs" />
+    <Compile Include="XMLModel\ShortQuantityType.cs" />
+    <Compile Include="XMLModel\SignatureIDType.cs" />
+    <Compile Include="XMLModel\SignatureMethodType.cs" />
+    <Compile Include="XMLModel\SignatureType.cs" />
+    <Compile Include="XMLModel\SizeTypeCodeType.cs" />
+    <Compile Include="XMLModel\SoleProprietorshipIndicatorType.cs" />
+    <Compile Include="XMLModel\SoundType.cs" />
+    <Compile Include="XMLModel\SourceCurrencyBaseRateType.cs" />
+    <Compile Include="XMLModel\SourceCurrencyCodeType.cs" />
+    <Compile Include="XMLModel\SourceForecastIssueDateType.cs" />
+    <Compile Include="XMLModel\SourceForecastIssueTimeType.cs" />
+    <Compile Include="XMLModel\SourceValueMeasureType.cs" />
+    <Compile Include="XMLModel\SpecialInstructionsType.cs" />
+    <Compile Include="XMLModel\SpecialSecurityIndicatorType.cs" />
+    <Compile Include="XMLModel\SpecialServiceInstructionsType.cs" />
+    <Compile Include="XMLModel\SpecialTermsType.cs" />
+    <Compile Include="XMLModel\SpecialTransportRequirementsType.cs" />
+    <Compile Include="XMLModel\SpecificationIDType.cs" />
+    <Compile Include="XMLModel\SpecificationTypeCodeType.cs" />
+    <Compile Include="XMLModel\SplitConsignmentIndicatorType.cs" />
+    <Compile Include="XMLModel\StartDateType.cs" />
+    <Compile Include="XMLModel\StartTimeType.cs" />
+    <Compile Include="XMLModel\StatementTypeCodeType.cs" />
+    <Compile Include="XMLModel\StatusAvailableIndicatorType.cs" />
+    <Compile Include="XMLModel\StatusCodeType.cs" />
+    <Compile Include="XMLModel\StatusReasonCodeType.cs" />
+    <Compile Include="XMLModel\StatusReasonType.cs" />
+    <Compile Include="XMLModel\StatusType.cs" />
+    <Compile Include="XMLModel\StowageType.cs" />
+    <Compile Include="XMLModel\StreetNameType.cs" />
+    <Compile Include="XMLModel\SubcontractingConditionsCodeType.cs" />
+    <Compile Include="XMLModel\SubcontractTermsType.cs" />
+    <Compile Include="XMLModel\SubmissionDateType.cs" />
+    <Compile Include="XMLModel\SubmissionDueDateType.cs" />
+    <Compile Include="XMLModel\SubmissionMethodCodeType.cs" />
+    <Compile Include="XMLModel\SubscriberIDType.cs" />
+    <Compile Include="XMLModel\SubscriberTypeCodeType.cs" />
+    <Compile Include="XMLModel\SubscriberTypeType.cs" />
+    <Compile Include="XMLModel\SubstitutionStatusCodeType.cs" />
+    <Compile Include="XMLModel\SuccessiveSequenceIDType.cs" />
+    <Compile Include="XMLModel\SummaryDescriptionType.cs" />
+    <Compile Include="XMLModel\SupplierAssignedAccountIDType.cs" />
+    <Compile Include="XMLModel\SupplierConsumptionType.cs" />
+    <Compile Include="XMLModel\SupplierPartyType.cs" />
+    <Compile Include="XMLModel\SupplyChainActivityTypeCodeType.cs" />
+    <Compile Include="XMLModel\TareWeightMeasureType.cs" />
+    <Compile Include="XMLModel\TargetCurrencyBaseRateType.cs" />
+    <Compile Include="XMLModel\TargetCurrencyCodeType.cs" />
+    <Compile Include="XMLModel\TargetInventoryQuantityType.cs" />
+    <Compile Include="XMLModel\TargetServicePercentType.cs" />
+    <Compile Include="XMLModel\TariffClassCodeType.cs" />
+    <Compile Include="XMLModel\TariffCodeType.cs" />
+    <Compile Include="XMLModel\TariffDescriptionType.cs" />
+    <Compile Include="XMLModel\TaxableAmountType.cs" />
+    <Compile Include="XMLModel\TaxAmountType.cs" />
+    <Compile Include="XMLModel\TaxCategoryType.cs" />
+    <Compile Include="XMLModel\TaxCurrencyCodeType.cs" />
+    <Compile Include="XMLModel\TaxEnergyAmountType.cs" />
+    <Compile Include="XMLModel\TaxEnergyBalanceAmountType.cs" />
+    <Compile Include="XMLModel\TaxEnergyOnAccountAmountType.cs" />
+    <Compile Include="XMLModel\TaxEvidenceIndicatorType.cs" />
+    <Compile Include="XMLModel\TaxExclusiveAmountType.cs" />
+    <Compile Include="XMLModel\TaxExemptionReasonCodeType.cs" />
+    <Compile Include="XMLModel\TaxExemptionReasonType.cs" />
+    <Compile Include="XMLModel\TaxIncludedIndicatorType.cs" />
+    <Compile Include="XMLModel\TaxInclusiveAmountType.cs" />
+    <Compile Include="XMLModel\TaxLevelCodeType.cs" />
+    <Compile Include="XMLModel\TaxPointDateType.cs" />
+    <Compile Include="XMLModel\TaxSchemeType.cs" />
+    <Compile Include="XMLModel\TaxSubtotalType.cs" />
+    <Compile Include="XMLModel\TaxTotalType.cs" />
+    <Compile Include="XMLModel\TaxTypeCodeType.cs" />
+    <Compile Include="XMLModel\TechnicalCommitteeDescriptionType.cs" />
+    <Compile Include="XMLModel\TechnicalNameType.cs" />
+    <Compile Include="XMLModel\TelecommunicationsServiceCallCodeType.cs" />
+    <Compile Include="XMLModel\TelecommunicationsServiceCallType.cs" />
+    <Compile Include="XMLModel\TelecommunicationsServiceCategoryCodeType.cs" />
+    <Compile Include="XMLModel\TelecommunicationsServiceCategoryType.cs" />
+    <Compile Include="XMLModel\TelecommunicationsServiceType.cs" />
+    <Compile Include="XMLModel\TelecommunicationsSupplyLineType.cs" />
+    <Compile Include="XMLModel\TelecommunicationsSupplyType.cs" />
+    <Compile Include="XMLModel\TelecommunicationsSupplyTypeCodeType.cs" />
+    <Compile Include="XMLModel\TelecommunicationsSupplyTypeType.cs" />
+    <Compile Include="XMLModel\TelefaxType.cs" />
+    <Compile Include="XMLModel\TelephoneType.cs" />
+    <Compile Include="XMLModel\TemperatureType.cs" />
+    <Compile Include="XMLModel\TenderEnvelopeIDType.cs" />
+    <Compile Include="XMLModel\TenderEnvelopeTypeCodeType.cs" />
+    <Compile Include="XMLModel\TendererQualificationRequestType.cs" />
+    <Compile Include="XMLModel\TendererRequirementType.cs" />
+    <Compile Include="XMLModel\TendererRequirementTypeCodeType.cs" />
+    <Compile Include="XMLModel\TendererRoleCodeType.cs" />
+    <Compile Include="XMLModel\TenderingTermsType.cs" />
+    <Compile Include="XMLModel\TenderLineType.cs" />
+    <Compile Include="XMLModel\TenderPreparationType.cs" />
+    <Compile Include="XMLModel\TenderRequirementType.cs" />
+    <Compile Include="XMLModel\TenderResultCodeType.cs" />
+    <Compile Include="XMLModel\TenderTypeCodeType.cs" />
+    <Compile Include="XMLModel\TestMethodType.cs" />
+    <Compile Include="XMLModel\TextType.cs" />
+    <Compile Include="XMLModel\TextType1.cs" />
+    <Compile Include="XMLModel\TextType2.cs" />
+    <Compile Include="XMLModel\ThirdPartyPayerIndicatorType.cs" />
+    <Compile Include="XMLModel\ThresholdAmountType.cs" />
+    <Compile Include="XMLModel\ThresholdQuantityType.cs" />
+    <Compile Include="XMLModel\ThresholdValueComparisonCodeType.cs" />
+    <Compile Include="XMLModel\TierRangeType.cs" />
+    <Compile Include="XMLModel\TierRatePercentType.cs" />
+    <Compile Include="XMLModel\TimeAmountType.cs" />
+    <Compile Include="XMLModel\TimeDeltaDaysQuantityType.cs" />
+    <Compile Include="XMLModel\TimeFrequencyCodeType.cs" />
+    <Compile Include="XMLModel\TimeType.cs" />
+    <Compile Include="XMLModel\TimezoneOffsetType.cs" />
+    <Compile Include="XMLModel\TimingComplaintCodeType.cs" />
+    <Compile Include="XMLModel\TimingComplaintType.cs" />
+    <Compile Include="XMLModel\TitleType.cs" />
+    <Compile Include="XMLModel\ToOrderIndicatorType.cs" />
+    <Compile Include="XMLModel\TotalAmountType.cs" />
+    <Compile Include="XMLModel\TotalBalanceAmountType.cs" />
+    <Compile Include="XMLModel\TotalConsumedQuantityType.cs" />
+    <Compile Include="XMLModel\TotalCreditAmountType.cs" />
+    <Compile Include="XMLModel\TotalDebitAmountType.cs" />
+    <Compile Include="XMLModel\TotalDeliveredQuantityType.cs" />
+    <Compile Include="XMLModel\TotalGoodsItemQuantityType.cs" />
+    <Compile Include="XMLModel\TotalInvoiceAmountType.cs" />
+    <Compile Include="XMLModel\TotalMeteredQuantityType.cs" />
+    <Compile Include="XMLModel\TotalPackageQuantityType.cs" />
+    <Compile Include="XMLModel\TotalPackagesQuantityType.cs" />
+    <Compile Include="XMLModel\TotalPaymentAmountType.cs" />
+    <Compile Include="XMLModel\TotalTaskAmountType.cs" />
+    <Compile Include="XMLModel\TotalTaxAmountType.cs" />
+    <Compile Include="XMLModel\TotalTransportHandlingUnitQuantityType.cs" />
+    <Compile Include="XMLModel\TraceIDType.cs" />
+    <Compile Include="XMLModel\TrackingDeviceCodeType.cs" />
+    <Compile Include="XMLModel\TrackingIDType.cs" />
+    <Compile Include="XMLModel\TradeItemPackingLabelingTypeCodeType.cs" />
+    <Compile Include="XMLModel\TradeServiceCodeType.cs" />
+    <Compile Include="XMLModel\TradingRestrictionsType.cs" />
+    <Compile Include="XMLModel\TrainIDType.cs" />
+    <Compile Include="XMLModel\TransactionCurrencyTaxAmountType.cs" />
+    <Compile Include="XMLModel\TransitDirectionCodeType.cs" />
+    <Compile Include="XMLModel\TransportationServiceDescriptionType.cs" />
+    <Compile Include="XMLModel\TransportationServiceDetailsURIType.cs" />
+    <Compile Include="XMLModel\TransportationServiceType.cs" />
+    <Compile Include="XMLModel\TransportationStatusTypeCodeType.cs" />
+    <Compile Include="XMLModel\TransportAuthorizationCodeType.cs" />
+    <Compile Include="XMLModel\TransportEmergencyCardCodeType.cs" />
+    <Compile Include="XMLModel\TransportEquipmentType.cs" />
+    <Compile Include="XMLModel\TransportEquipmentTypeCodeType.cs" />
+    <Compile Include="XMLModel\TransportEventType.cs" />
+    <Compile Include="XMLModel\TransportEventTypeCodeType.cs" />
+    <Compile Include="XMLModel\TransportExecutionPlanReferenceIDType.cs" />
+    <Compile Include="XMLModel\TransportExecutionStatusCodeType.cs" />
+    <Compile Include="XMLModel\TransportHandlingUnitType.cs" />
+    <Compile Include="XMLModel\TransportHandlingUnitTypeCodeType.cs" />
+    <Compile Include="XMLModel\TransportMeansType.cs" />
+    <Compile Include="XMLModel\TransportMeansTypeCodeType.cs" />
+    <Compile Include="XMLModel\TransportModeCodeType.cs" />
+    <Compile Include="XMLModel\TransportServiceCodeType.cs" />
+    <Compile Include="XMLModel\TransportServiceProviderRemarksType.cs" />
+    <Compile Include="XMLModel\TransportServiceProviderSpecialTermsType.cs" />
+    <Compile Include="XMLModel\TransportUserRemarksType.cs" />
+    <Compile Include="XMLModel\TransportUserSpecialTermsType.cs" />
+    <Compile Include="XMLModel\TypeCodeType.cs" />
+    <Compile Include="XMLModel\UBLExtensionType.cs" />
+    <Compile Include="XMLModel\UBLVersionIDType.cs" />
+    <Compile Include="XMLModel\UNDGCodeType.cs" />
+    <Compile Include="XMLModel\UnknownPriceIndicatorType.cs" />
+    <Compile Include="XMLModel\UnstructuredPriceType.cs" />
+    <Compile Include="XMLModel\UpperOrangeHazardPlacardIDType.cs" />
+    <Compile Include="XMLModel\UrgencyCodeType.cs" />
+    <Compile Include="XMLModel\URIType.cs" />
+    <Compile Include="XMLModel\UtilityItemType.cs" />
+    <Compile Include="XMLModel\UtilityStatementTypeCodeType.cs" />
+    <Compile Include="XMLModel\UUIDType.cs" />
+    <Compile Include="XMLModel\ValidateProcessType.cs" />
+    <Compile Include="XMLModel\ValidateToolType.cs" />
+    <Compile Include="XMLModel\ValidateToolVersionType.cs" />
+    <Compile Include="XMLModel\ValidationDateType.cs" />
+    <Compile Include="XMLModel\ValidationResultCodeType.cs" />
+    <Compile Include="XMLModel\ValidationTimeType.cs" />
+    <Compile Include="XMLModel\ValidatorIDType.cs" />
+    <Compile Include="XMLModel\ValidityStartDateType.cs" />
+    <Compile Include="XMLModel\ValueAmountType.cs" />
+    <Compile Include="XMLModel\ValueMeasureType.cs" />
+    <Compile Include="XMLModel\ValueQualifierType.cs" />
+    <Compile Include="XMLModel\ValueQuantityType.cs" />
+    <Compile Include="XMLModel\ValueType.cs" />
+    <Compile Include="XMLModel\ValueType1.cs" />
+    <Compile Include="XMLModel\VarianceQuantityType.cs" />
+    <Compile Include="XMLModel\VariantConstraintIndicatorType.cs" />
+    <Compile Include="XMLModel\VariantIDType.cs" />
+    <Compile Include="XMLModel\VersionIDType.cs" />
+    <Compile Include="XMLModel\VesselIDType.cs" />
+    <Compile Include="XMLModel\VesselNameType.cs" />
+    <Compile Include="XMLModel\VideoType.cs" />
+    <Compile Include="XMLModel\WarrantyInformationType.cs" />
+    <Compile Include="XMLModel\WebSiteAccessType.cs" />
+    <Compile Include="XMLModel\WebsiteURIType.cs" />
+    <Compile Include="XMLModel\WeekDayCodeType.cs" />
+    <Compile Include="XMLModel\WeightingAlgorithmCodeType.cs" />
+    <Compile Include="XMLModel\WeightNumericType.cs" />
+    <Compile Include="XMLModel\WeightType.cs" />
+    <Compile Include="XMLModel\WorkPhaseCodeType.cs" />
+    <Compile Include="XMLModel\WorkPhaseType.cs" />
+    <Compile Include="XMLModel\XPathType.cs" />
+    <Compile Include="MoneyToText.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="tests\ubleconverter.cs" />
+    <Compile Include="tests\ubltr.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Connected Services\EdmService\EFaturaEDM.wsdl" />
+    <None Include="Connected Services\EdmService\EFaturaEDM.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EdmService\EFaturaEDM1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EdmService\EFaturaEDM2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EdmService\EFaturaEDM3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EdmService\EFaturaEDM4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EdmService\EFaturaEDM5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.ArchiveInvoiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.base64Binary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.CancelInvoiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.CheckCounterResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_ArchiveInvoiceResponseMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_CancelInvoiceResponseMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_CheckCounterResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_CheckUserResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_EmailInvoiceResponseMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_GetEnvelopeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_GetEnvelopeStatusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_GetInvoiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_GetInvoiceResponseDateResponseMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_GetInvoiceSerialResponseMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_GetInvoiceStatusResponseMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_GetSessionInfoResponseMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_GetUserListBinaryResponseMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_GetUserListResponseMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_LoadInvoiceResponseMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_LoginResponseMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_LogoutResponseMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_MarkEnvelopeResponseMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_MarkInvoiceResponseMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_PrepareInvoiceResponseResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_SendInvoiceResponseMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_SendInvoiceResponseResponseMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EDM_SendInvoiceResponseWithServerSignResponseMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.EmailInvoiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.ENVELOPE.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.getApplicationResponseResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.getAppRespResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.GetInvoiceResponseDateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.GetInvoiceSerialResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.GetInvoiceStatusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.GetSessionInfoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.GetUserListBinaryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.GetUserListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.GIBUSER.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.INVOICE.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.LoadInvoiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.LoginResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.LogoutResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.MarkEnvelopeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.MarkInvoiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.SendInvoiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.SendInvoiceResponseResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EdmService\SentezEInvoiceXML.EdmService.SendInvoiceResponseWithServerSignResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="base64.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Connected Services\EdmService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\EdmService\configuration.svcinfo" />
+    <None Include="Connected Services\EdmService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\EdmService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\UGCore\UGCore\UGCore.csproj">
+      <Project>{1860B9DA-DB3F-41DA-B31E-4A55A5C18D29}</Project>
+      <Name>UGCore</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

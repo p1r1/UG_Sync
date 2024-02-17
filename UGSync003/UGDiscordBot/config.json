@@ -1,0 +1,8 @@
+{
+  "discord": {
+    "token": "yourtoken",
+    "appId": "yourtoken",
+    "appSecret": "yourtoken",
+    "CommandPrefix": "//"
+  }
+}

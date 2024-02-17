@@ -1,0 +1,59 @@
+﻿        private void Button1_Click(object sender, EventArgs e) {////////////////////////////////////////////////////////FiyatStok
+            if (Convert.ToInt32(textBoxQueryRangePrice.Text) > 1000) {
+                MessageBox.Show("Aralık çok büyük basamayabilir!");
+            }            
+            // get data from sql database 
+            string connString = @"Server=192.168.1.99; Database=Live; uid=sa; pwd=s; connection timeout=30;";
+            string x = textBoxQueryRangePrice.Text;
+            if (x == "") {
+                x = "100";
+                MessageBox.Show("textBoxQueryRangePrice Boş olamaz -> " + x.ToString());
+            }
+            string query = "SELECT Top "+ x + " prd_barcode, prd_stock, prd_price  From  SentezDokuz"; 
+            if (textBoxSecretPriceStockQuery.Text != "") {
+                query = textBoxSecretPriceStockQuery.Text;
+                //SELECT Top 20 prd_barcode, prd_stock, prd_price  From  SentezDokuz
+                // regex replace
+                query = query.Replace("x",  x);
+            }
+
+            DataSet dat = new DataSet();
+            dat.Tables.Add(Functions.getDataFromSql(connString, query));
+            if (dat.Tables.Count != 0) {
+                // change the table
+                foreach (DataTable item in dat.Tables) {
+                    item.TableName = "product";
+                }
+                //send datasetJSon to website 
+                //gönder
+                string url1 = textBoxWebSitePostAddress.Text;
+                if (url1 == "") {
+                    url1 = @"https://www.uzaktangelir.com/extensions/sentez/index.php";
+                    MessageBox.Show("textBoxWebSitePostAddress Boş olamaz -> " + url1);
+                }
+                string json = Functions.makeJson(dat, textBoxWebUsername.Text, textBoxWebUserPass.Text);
+                richTextBox1.Text = json;
+                string response = "";
+                // write to site
+                try {
+                    response = Functions.writeToSite(url1, json);
+                }
+                catch (Exception) {
+                    MessageBox.Show("button -> siteye yazamadı!");
+                    throw;
+                }
+                dynamic status = JsonConvert.DeserializeObject(response);
+                //MessageBox.Show("cevap " + status.status);
+                //richTextBox1.Text += ("cevap " + response);
+                if (status.status == "1") {
+                    labelInfo.Text = "Siteye aktarıldı.";
+                }
+                else
+                    MessageBox.Show("\n" + response);
+            }
+            else {
+                // hepsini çektiği için buraya hiç düşmez. updated at kullanılabilir
+                labelInfo.Text = "Fiyatı değişecek ürün yok";
+            }
+        }
+

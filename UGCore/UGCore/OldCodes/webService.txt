@@ -1,0 +1,166 @@
+﻿        private void orderWithWebService() {
+			/// ///
+			/// Webservice Names and Adresses
+			/// ///
+			/// Finance -> http://192.168.1.99:55801/service/FinanceModule/FinanceModuleService.svc
+			/// Login -> http://192.168.1.99:55801/service/Login/LoginService.svc
+			/// Order -> http://192.168.1.99:55801/service/OrderModule/OrderModuleService.svc
+            /// ///
+            /// Get appID and sessionKey
+            /////
+            WebServiceApp app = new WebServiceApp();
+            //labelInfo.Text = ("Login İşlemi Başlanıyor");
+            /////
+            /// Get service urls from textbox
+            /////
+            app.loginServiceUrlGetSet = textBoxLoginService.Text;
+            app.financeServiceUrlGetSet = textBoxFinanceOrder.Text;
+            app.orderServiceUrlGetSet = textBoxOrderService.Text;
+
+            app.sentezUserNameGetSet = textBoxSentezUserName.Text;
+            app.sentezUserPasswordGetSet = textBoxSentezUserPass.Text;
+            app.sentezCompanyCodeGetSet = textBoxSentezCompany.Text;
+            app.sentezCompanyPasswordGetSet = textBoxSentezCompanyPass.Text;
+            /////
+            /// Login and Get sessionKey
+            /////
+            Guid sessionKey;
+            sessionKey = app.Login();
+            labelInfo.Text = "Oturum Id niz : " + sessionKey.ToString();
+            /////
+            /// create url for weborders (websiteURL returns Json)
+            /////
+            string url1 = Functions.createUrl4WebOrders(textBoxDaysAgo.Text, textBoxWebUsername.Text, textBoxWebUserPass.Text);
+            //labelInfo.Text = url1;
+
+            /////
+            /// create weborder and get webOrders
+            /////
+            WebOrder orders = new WebOrder(url1);
+            orders.getJsonFromWeb();
+            orders.createDynamicVar();
+            //labelInfo.Text = (orders.m_data.orders[0].ord_code);
+
+            /////
+            /// take webOrders from website. check account existence
+            /// if account doesn't exist on sentez add it
+            /// if account doesn't exist both website and sentez (then this order's owner is not member from website) add that account based on email
+            /// when account settings done create receipt and add order items to receipt
+            /// send webOrders to sentez with receipType 2
+            ////
+            try {
+                if (orders.m_data.orders.Count == 0) {
+                    labelInfo.Text = "Sipariş yok";
+                }
+                else {
+                    if (orders.m_data.status == 200) {
+                        //labelInfo.Text = ("Status is OK! -> 200");
+                        //for (int i = 0; i < webOrders.m_data.webOrders.Count; i++) {
+                        foreach (var ordr in orders.m_data.orders) {
+                            string specialCode = ordr.ord_code;
+                            int receiptType = 2;
+                            /////
+                            /// ozel koda gore siparis yaz yada yazma
+                            /////
+                            var ofm = app.GetOFMOrderReceipt(sessionKey, specialCode, receiptType);
+                            if (ofm.ReturnCode >= 400) {
+                                // sentez doesn't have this order's special code 
+                                // make new order and get info from website
+                                labelInfo.Text = "sipariş sentezde yok!";
+                                /////
+                                /// Check account(cari) if sentez does NOT has the account then create it
+                                /////
+                                string accountID = ordr.ord_mmb_id.ToString();
+                                string accountEmail = ordr.ord_mmb_email.ToString();
+                                string accountName = ordr.ord_mmb_name;
+
+                                if (accountID == "0") { // id 0 ise websiteye uye degil
+                                                        // siteye uye degil , sentezede cari mi? emailden bak
+                                    var ttc = app.getOfmAccountEmail(sessionKey, accountEmail);
+                                    if (ttc.ReturnCode >= 400) { // emaili kayitli degil! sentezde caride degil
+                                                                 // account id ver ve kaydet
+                                        accountID = ordr.ord_mmb_email;
+                                        Finance.Erp_CurrentAccount ca = new Finance.Erp_CurrentAccount();
+                                        ca.CurrentAccountCode = accountID;
+                                        ca.CurrentAccountName = accountName;
+                                        ca.CurrentAccountType = 2; //alici
+                                        ca.CurrentAccountKind = 2; //sahis
+                                        ca.EMail = accountEmail;
+                                        app.SaveCurrentAccount(sessionKey, ca, false);
+                                        labelInfo.Text = "0 - emaili kayitli degil! sentezde caride degil." + accountID;
+                                    }
+                                    else { //siteye uye degil ama sentezde cari. AccountID al!!!
+                                           //labelInfo.Text = ("1" + accountEmail);
+                                        var tc = app.getOfmAccountEmail(sessionKey, accountEmail);
+                                        Finance.Erp_CurrentAccount acc1 = tc.Return[0];
+                                        accountID = acc1.CurrentAccountCode;
+                                        labelInfo.Text = "1 - siteye uye degil ama sentezde cari." + accountID + " email-> " + accountEmail;
+                                    }
+                                }
+                                else { // id 0 degil siteye uye
+                                       //sentede cari mi kontrol et
+                                    var ttc = app.getOfmAccountEmail(sessionKey, accountEmail);
+                                    if (ttc.ReturnCode >= 400) { // sentezde cari degil
+                                                                 //kaydet
+                                        Finance.Erp_CurrentAccount ca = new Finance.Erp_CurrentAccount();
+                                        ca.CurrentAccountCode = accountID; // sentez kendi id veriyor mu ??
+                                        ca.CurrentAccountName = accountName;
+                                        ca.CurrentAccountType = 2; //alici
+                                        ca.CurrentAccountKind = 2; //Şirket 2 Şahıs
+                                        ca.EMail = accountEmail;
+                                        app.SaveCurrentAccount(sessionKey, ca, false);
+                                        labelInfo.Text = "2 - id 0 degil siteye uye. sentezde cari degil" + accountID;
+                                    }
+                                    //else // sentezde cari siteye de kayitli
+                                }
+
+                                ///// irsaliye olustur
+                                Order.Erp_OrderReceipt or = new Order.Erp_OrderReceipt();
+                                or.SpecialCode = ordr.ord_code;// special code is important!!!!!
+                                or.CurrentAccountCode = accountID;// "PM0000112";
+                                or.UD_Email = ordr.ord_mmb_email;
+                                or.ReceiptDate = ordr.ord_update_date;
+                                or.ReceiptTime = ordr.ord_update_date;
+                                or.WarehouseCode = "01"; //app.GetFirstWarehouse(sessionKey);
+                                or.ReceiptType = 2;
+
+                                // irsaliye kalemlerini gir
+                                List<Order.Erp_OrderReceiptItem> oris = new List<Order.Erp_OrderReceiptItem>();
+                                foreach (var item in ordr.products) {
+                                    Order.Erp_OrderReceiptItem ori = new Order.Erp_OrderReceiptItem();
+                                    ori.ItemType = 1;
+                                    ori.InventoryCode = item.orp_barcode;//"9786056832697";
+                                    ori.Quantity = item.orp_quantity;
+                                    ori.UnitPrice = Convert.ToDecimal(item.orp_unit_tprice); //orp_unit_tprice
+                                    ori.VatIncluded = true;
+                                    ori.VatRate = item.orp_tax_rate;
+                                    //add productItem to receipt
+                                    richTextBox1.Text += item.orp_barcode + "\n";
+                                    //or.Erp_OrderReceiptItemList = new Order.Erp_OrderReceiptItem[] { ori };
+                                    oris.Add(ori);
+                                }
+
+                                var arr = oris.ToArray();
+                                or.Erp_OrderReceiptItemList = arr;
+
+                                // irsaliyeyi kaydet
+                                var o = app.SaveOrderReceipt(sessionKey, or, false);
+                            }
+                            else {
+                                //donothing
+                                labelInfo.Text = "sipariş sentezde var";
+                            }
+                        }//forr
+                    }//status if
+                    else {
+                        labelInfo.Text = ("Status is WRONG!!!");
+                    }
+                    //labelInfo.Text = ("bitti kapaniyom");
+                    //Console.ReadKey();
+                }
+            }
+            catch (Exception) {
+                labelInfo.Text = (sessionKey.ToString() + " sessionKey\n webOrders boş");
+                throw;
+            }
+        }

@@ -1,0 +1,252 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace UGCore {
+    public static class UGSync_PriceStock {
+        private static DataTable oldTable;
+        
+        //sendToWebsite(product_TopX, product_includeImage, product_url, sqlConn, webUserName, webUserPass, DELAY_TIME);
+        //sendOrdersToSql(order_DaysAgo, order_url, sqlConn, mySqlConn, webUserName, webUserPass, DELAY_TIME);
+        public static async Task<bool> sendPriceStockToWebSite(string xTop/*not important get them all*/, 
+                                                               string xEr,
+                                                               string url,
+                                                               string connString,
+                                                               string webUserName,
+                                                               string webUserPass,
+                                                               int DELAY_TIME,
+                                                               bool sendFullTable = false) {
+            
+            string logFilePath = AppDomain.CurrentDomain.BaseDirectory + "Info_" + DateTime.Now.ToString("dd-MM-yyyy_HH") + ".log";
+            string methodName = "FiyatStok--> ";
+            
+            /// ///
+            /// Send prices and real stock numbers to website via json
+            ///  ///
+            /// get data from sql database 
+            string query = "SELECT prd_barcode, prd_stock, prd_price, prd_status, prd_in_use, prd_ext_id, prd_inventoryType From SentezDokuz";
+            DataTable tableProduct = Functions.getDataFromSql(connString, query);
+
+            /// better to send querry
+            //string query = "getDataFromSentezDokuz";/// 0.1-0.2 sec quicker
+            //DataTable tableProduct = Functions.getDataFromProcedure(connString, query, null);//.getDataFromSql(connString, query);
+
+            /// ///
+            /// set stok quantity
+            /// ///
+            try {
+                tableProduct.Select("[prd_inventoryType] = '8'")
+                             .ToList<DataRow>()
+                             .ForEach(r => {
+                                 r["prd_stock"] = Functions.getDataFromProcedure(connString, "getSet",
+                                                    new List<SqlPair> { new SqlPair("setRecId", r["prd_ext_id"], SqlDbType.Int) }).Rows[0][0];
+                             });
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex);
+                return false;
+                // TODO: catch this diffrent!!! d
+            }
+
+
+      
+            /// remove unwanted columns
+            DataTable strippedTable = new DataTable();
+            try {
+                DataView view = new DataView(tableProduct);
+                strippedTable = view.ToTable(false, "prd_barcode", "prd_stock", "prd_price", "prd_status", "prd_in_use");
+            }
+            catch (Exception) { }
+
+            /// ///
+            /// if price or stock not changed do not send
+            /// ///
+            DataTable finalTable = new DataTable();
+            if (oldTable != null && oldTable.Rows.Count > 0) {
+                finalTable = comperaTables(strippedTable, oldTable);
+            }
+            else {
+                finalTable = strippedTable;
+            }
+            /// this became oldtable            
+            if (finalTable.Rows.Count > 0) {
+                if (oldTable != null && oldTable.Rows.Count > 0) {
+                    oldTable.Clear();
+                }
+                oldTable = strippedTable; 
+            }
+
+            /// add to dataset for bad old function
+            DataSet dat = new DataSet();
+            if (sendFullTable) {
+                dat.Tables.Add(strippedTable);
+            }
+            else {
+                dat.Tables.Add(finalTable);//strippedTable
+            }
+
+            /// ///
+            /// divide and send data to internet part by part
+            /// ///
+            if (dat.Tables.Count != 0) {
+                //divide and conquer
+
+                string firstOutput = "{\n    \"settings\": {\n      \"user\": \"" + webUserName + "\",\n      \"pass\": \"" + webUserPass + "\"\n    },\n    \"products\":" + "{\n\"product\": [\n";
+                string lastOutput = "\n}\n}";
+
+                int i = 0;
+                /// returns list make json xer
+                foreach (string item in Functions.makeJsonList(dat, xEr)) {
+                    string json = "";
+                    json = firstOutput + item.ToString() + lastOutput;
+                    //labelInfo2.Invoke(() => labelInfo2.Text = json);
+
+                    Log.append(methodName + i.ToString() + ". \n" + json + "\n ----------\n", logFilePath);
+
+                    // write to site
+                    string response = "";
+                    try {
+                        response = Functions.writeToSite(url, json);
+
+                        dynamic status = JsonConvert.DeserializeObject(response);
+                        if (status.status == "1") {
+                            Log.append(methodName + (i + 1).ToString() + ". part siteye aktarıldı.", logFilePath);
+                            i++;
+                        }
+                        else {
+                            Log.append(methodName + response, logFilePath);
+                        }
+                    }
+                    catch (Exception) {
+                        Log.append(methodName + "button -> siteye yazamadı!", logFilePath);
+                       
+                    }
+
+                }
+                int a = Convert.ToInt32(xTop);
+                int b = Convert.ToInt32(xEr);
+                Log.append(methodName + ((b * (i - 1)) + (a % b)).ToString() + " adet ürün basıldı", logFilePath);
+            }
+            else {
+                /// hepsini çektiği için buraya hiç düşmez. updated at kullanılabilir
+                Log.append(methodName + "Fiyatı değişecek ürün yok", logFilePath);
+            }
+            
+            await Task.Delay(DELAY_TIME);
+            return true;
+        }
+
+
+
+
+        private static DataTable comperaTables(DataTable dataTable1, DataTable dataTable2) {
+            //DataTable dataTable1; // Load with data
+            //DataTable dataTable2; // Load with data (same schema)
+
+            //// Fast check for row count equality.
+            //if (dataTable1.Rows.Count != dataTable2.Rows.Count) {
+            //    return true;
+            //}
+
+            var differences =
+                dataTable1.AsEnumerable().Except(dataTable2.AsEnumerable(),
+                                                        DataRowComparer.Default);
+
+            return differences.Any() ? differences.CopyToDataTable() : new DataTable();
+
+        }
+
+
+
+
+    }
+}
+
+
+#region old
+//IEnumerable<DataRow> rows = tableProduct.Rows.Cast<DataRow>().Where(r => r["prd_inventoryType"].ToString() == "8");
+//rows.ToList().ForEach(r => r.SetField("prd_stock",
+//    Functions.getDataFromProcedure(connString, "getSet", new List<SqlPair> { new SqlPair("setRecId", r["prd_ext_id"], SqlDbType.Int) }).Rows[0][0]));
+
+//DataTable dt = new DataTable();
+
+//// Get all DataRows where the name is the name you want.
+//IEnumerable<datarow> rows = dt.Rows.Cast<DataRow>().Where(r => r["Name"].ToString() == "SomeName");
+//// Loop through the rows and change the name.
+//rows.ToList().ForEach(r => r.SetField("Name", "AnotherName"));
+
+//// Alternative approach.
+//// Simply loop through the rows, check the value of the Name field and change its value accordingly.
+//foreach (DataRow row in dt.Rows) {
+//    if (row["Name"].ToString() == "SomeName")
+//        row.SetField("Name", "AnotherName");
+//}
+//DataRow[] result = tableProduct.Select("prd_inventoryType='8'");// no gain
+
+// Get all DataRows where the name is the name you want.
+
+//IEnumerable<DataRow> rows = tableProduct.Rows.Cast<DataRow>().Where(r => r["prd_inventoryType"].ToString() == "8");
+//// Loop through the rows and change the name.
+////DataTable iii = Functions.getDataFromProcedure(connString, "getSet", new List<SqlPair> { new SqlPair("setRecId", 90915, SqlDbType.Int) });
+//rows.ToList().ForEach(r => r.SetField("prd_stock", 
+//    Functions.getDataFromProcedure(connString, "getSet", new List<SqlPair> { new SqlPair("setRecId", r["prd_ext_id"], SqlDbType.Int) }).Rows[0][0]));
+///////slow 284 sec
+////rows.ToList().ForEach(r => r.SetField("prd_stock", Functions.getDataFromProcedure(connString,
+////            $@"SELECT MIN(ISNULL(prd_stock, 0)) 
+////               FROM SentezDokuz 
+////               WHERE prd_ext_id IN (SELECT InventoryId FROM Erp_RecipeItem WHERE OwnerInventoryId = '{r["prd_ext_id"].ToString()}' AND InUse = '1')")));
+//sw.Stop();
+//Console.WriteLine("3->" + sw.Elapsed.TotalSeconds.ToString("0.000000"));
+
+//sw.Restart();
+//Console.WriteLine("______________");
+
+/*
+foreach (DataRow row in tableProduct.Rows) {
+    if (row["prd_inventoryType"].ToString() == "8") {
+        string querySet = string.Format("SELECT InventoryId FROM Erp_RecipeItem WHERE OwnerInventoryId = {0} and InUse = '1' ORDER BY GroupNo", row["prd_ext_id"].ToString());
+        DataTable tab = Functions.getDataFromSql(connString, querySet);
+
+        sw.Stop();
+        Console.WriteLine("1->" + sw.Elapsed.TotalSeconds.ToString("0.000000"));
+        sw.Restart();
+
+        string queryEnd = "";
+        foreach (DataRow r in tab.Rows) {
+            queryEnd += r["InventoryId"] + ",";
+        }
+        queryEnd = queryEnd.Remove(queryEnd.LastIndexOf(','));
+
+        sw.Stop();
+        Console.WriteLine("2->" + sw.Elapsed.TotalSeconds.ToString("0.000000"));
+        sw.Restart();
+
+        ////slow 270 sec
+        //string querySentezDokuz = string.Format("SELECT MIN(ISNULL(prd_stock, 0)) FROM SentezDokuz WHERE prd_ext_id IN ({0})", queryEnd);
+        //string smallestStockString = Functions.executeScalar(connString, querySentezDokuz);
+        //Double.TryParse(smallestStockString, out double smallestStock);
+        ///141 sec
+        string querySentezDokuz = string.Format("SELECT prd_stock FROM SentezDokuz WHERE prd_ext_id IN ({0})", queryEnd);
+        DataTable t = Functions.getDataFromSql(connString, query);
+        double smallestStock = 999999999;
+        foreach (DataRow r in t.Rows) {
+            double.TryParse(r["prd_stock"].ToString(), out double stock);
+            if (stock < smallestStock) {
+                smallestStock = stock;
+            }
+        }
+
+        sw.Stop();
+        Console.WriteLine("3->" + sw.Elapsed.TotalSeconds.ToString("0.000000"));
+        Console.WriteLine("______________");
+        sw.Restart();
+
+        row["prd_stock"] = smallestStock.ToString();
+    }
+}
+*/
+#endregion
